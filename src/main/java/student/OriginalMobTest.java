@@ -9,14 +9,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class OriginalMobTest {
     @Test
     @GradedTest(name = "Original testIsAlive()", points = 5.0)
-    public  void testIsAlive() {
-        if (1 == 1) {throw new IllegalArgumentException();}
+    public void testIsAlive() {
         Mob zombie = new Zombie();
         assertTrue(zombie.isAlive()); // Healthy
         zombie.takeDamage(1);
         assertTrue(zombie.isAlive()); // Injured
         zombie.takeDamage(20);
         assertFalse(zombie.isAlive()); // Dead
+        System.err.println("assertFalse succeeded?!");
     }
 
     @Test

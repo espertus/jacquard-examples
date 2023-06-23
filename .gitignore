@@ -17,3 +17,5 @@ jacocohtml/
 target/
 lib/
 checkstyle-results.xml
+results/
+working/

@@ -13,6 +13,8 @@ repositories {
 apply plugin : "java"
 ext {
     javaMainClass = "student.Main"
+    // Normally, libraries are in /lib/, but this can be overridden at command line
+    libraryPath = project.properties['libPath'] ?: "/lib/"
 }
 
 application {
@@ -20,7 +22,8 @@ application {
 }
 
 dependencies {
-    implementation files('../GroovyNewGrader/build/libs/GroovyNewGrader-1.0-SNAPSHOT.jar')
+    implementation files(libraryPath + 'GroovyNewGrader-1.0-SNAPSHOT.jar')
+    implementation 'org.json:json:20230618'
     implementation 'com.github.javaparser:javaparser-symbol-solver-core:3.25.3'
     implementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     implementation 'org.junit.jupiter:junit-jupiter-engine:5.8.1'

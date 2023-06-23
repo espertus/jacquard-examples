@@ -2,6 +2,7 @@ package student;
 
 import newgrader.common.Result;
 import newgrader.junittester.JUnitTester;
+import newgrader.common.Gradescope;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ public class Main {
         // JUnitTester runner = runner.runTestClasses(OriginalMobTest.class, MobTest.class);
         // JUnitTester = runner.runTestPackage("student");
         List<Result> results = runner.run();
-        System.out.println(results);
+        String s = Gradescope.serialize(results);
+        System.out.println(s);
     }
 }

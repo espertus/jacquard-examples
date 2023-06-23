@@ -67,6 +67,20 @@ def package_to_path(package: str):
     return package.replace(".", os.sep) + os.sep
 
 
+def ensure_file_in_package(file_path: str, package: str):
+    """Ensures that a file contains the expected package statement.
+
+    :raise Exception: if the package student is not found.
+    """
+    pkg_stmt = f"package {package};"
+    with open(file_path, 'r') as f:
+        for line in f:
+            if line.lstrip().startswith(pkg_stmt):
+                return
+    raise Exception(
+        f"File {file_path} does not contain the expected package declaration: {pkg_stmt}")
+
+
 def copy_req_files():
     """Copy student-provided files into the appropriate server directory.
 
@@ -80,6 +94,8 @@ def copy_req_files():
     for file in SUBMISSION_FILES:
         file_path = SUBMISSION_SUBDIR + file
         if os.path.exists(file_path):
+            if file_path.endswith(".java"):
+                ensure_file_in_package(file_path, SUBMISSION_PACKAGE)
             shutil.copy(file_path, dest_path)
         else:
             raise Exception(f"File {file_path} not found.")

@@ -6,15 +6,15 @@ group = 'org.example'
 version = '1.0-SNAPSHOT'
 
 repositories {
+    maven {
+        url 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
+    }
     mavenCentral()
 }
-
 
 apply plugin : "java"
 ext {
     javaMainClass = "student.Main"
-    // Normally, libraries are in /lib/, but this can be overridden at command line
-    libraryPath = project.properties['libPath'] ?: "/lib/"
 }
 
 application {
@@ -22,7 +22,7 @@ application {
 }
 
 dependencies {
-    implementation files(libraryPath + 'GroovyNewGrader-1.0-SNAPSHOT.jar')
+    implementation 'com.spertus:jacquard:0.1-SNAPSHOT'
     implementation 'org.json:json:20230618'
     implementation 'com.github.javaparser:javaparser-symbol-solver-core:3.25.3'
     implementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'

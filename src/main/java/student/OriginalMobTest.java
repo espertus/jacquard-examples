@@ -1,6 +1,6 @@
 package student;
 
-import newgrader.common.GradedTest;
+import com.spertus.jacquard.common.GradedTest;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -16,7 +16,6 @@ public class OriginalMobTest {
         assertTrue(zombie.isAlive()); // Injured
         zombie.takeDamage(20);
         assertFalse(zombie.isAlive()); // Dead
-        System.err.println("assertFalse succeeded?!");
     }
 
     @Test

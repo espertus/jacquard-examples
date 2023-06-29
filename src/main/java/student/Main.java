@@ -1,8 +1,9 @@
 package student;
 
-import newgrader.common.Result;
-import newgrader.junittester.JUnitTester;
-import newgrader.common.Gradescope;
+import com.spertus.jacquard.checkstylegrader.CheckstyleGrader;
+import com.spertus.jacquard.common.*;
+import com.spertus.jacquard.junittester.JUnitTester;
+import com.spertus.jacquard.publisher.GradescopePublisher;
 
 import java.util.List;
 
@@ -12,7 +13,8 @@ public class Main {
         // JUnitTester runner = runner.runTestClasses(OriginalMobTest.class, MobTest.class);
         // JUnitTester = runner.runTestPackage("student");
         List<Result> results = runner.run();
-        String s = Gradescope.serialize(results);
-        System.out.println(s);
+        CheckstyleGrader grader = new CheckstyleGrader("config/checks.xml", 1.0, 10.0);
+        results.addAll(grader.grade(Target.fromPathString("Mob.java")));
+        new GradescopePublisher().displayResults(results);
     }
 }

@@ -8,12 +8,12 @@ import java.util.Random;
  * A Minecraft mob.
  */
 public class Mob {
-    private final String type;
+    private final    String type;
     private final int maxHearts;
     private final Behavior behavior;
     private final int minDamage;
-    private final int maxDamage;
-    private int numHearts;
+    private int maxDamage;  // omits final
+    private int NUMHEARTS;
 
     public Mob(String type, int maxHearts, Behavior behavior, int minDamage, int maxDamage) {
         this.type = type;
@@ -21,7 +21,7 @@ public class Mob {
         this.behavior = behavior;
         this.minDamage = minDamage;
         this.maxDamage = maxDamage;
-        this.numHearts = maxHearts;
+        this.NUMHEARTS = maxHearts;
     }
 
     public String getType() {
@@ -45,13 +45,13 @@ public class Mob {
     }
 
     public int getNumHearts() {
-        return numHearts;
+        return NUMHEARTS;
     }
 
     public Status getStatus() {
-        if (numHearts == maxHearts) {
+        if (NUMHEARTS == maxHearts) {
             return Status.Healthy;
-        } else if (numHearts == 0) {
+        } else if (NUMHEARTS == 0) {
             return Status.Dead;
         } else {
             return Status.Injured;
@@ -93,14 +93,14 @@ public class Mob {
 
     /**
      * Takes up to the specified amount of damage, to a maximum of
-     * {@link #numHearts}, printing a message with the amount of damage
+     * {@link #NUMHEARTS}, printing a message with the amount of damage
      * taken and the new status.
      *
      * @param damage the amount of damage inflicted
      */
     public void takeDamage(int damage) {
-        int actualDamage = damage > numHearts ? numHearts : damage;
-        numHearts -= actualDamage;
+        int actualDamage = damage > NUMHEARTS ? NUMHEARTS : damage;
+        NUMHEARTS -= actualDamage;
         String text = actualDamage == 1 ? "heart" : "hearts";
         System.out.printf("The %s took %d %s of damage.", type, actualDamage, text);
         System.out.println("It is now " + getStatus() + ".");

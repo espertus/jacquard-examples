@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] args) {
         final List<Result> results = new ArrayList<>();
         final Target mobJava = Target.fromPathString("src/main/java/student/Mob.java");
-/*
+
         // Run unit tests.
         JUnitTester runner = new JUnitTester(OriginalMobTest.class, MobTest.class);
         results.addAll(runner.run());
@@ -21,7 +21,7 @@ public class Main {
         // Run checkstyle.
         CheckstyleGrader checkstyleGrader = new CheckstyleGrader("config/checks.xml", 1.0, 10.0);
         results.addAll(checkstyleGrader.grade(mobJava));
-*/
+
         // Ensure that immutable properties are declared private final.
         FieldModifierChecker fmChecker = new FieldModifierChecker(
                 "private final checker",

@@ -18,10 +18,9 @@ WORKING_SUBDIR = "working" + os.sep
 WORKING_JAVA_SUBDIR = WORKING_SUBDIR + SOURCE_SUBDIR + os.sep
 GRADLEW_WINDOWS_CMD = "gradlew.bat"
 GRADLEW_UNIX_CMD = "./gradlew"
-LIB_PATH = os.path.join("..", "lib") + os.sep
 # This includes directories, which must end with a separator.
 FILES_TO_COPY = ["build.gradle", "gradle" + os.sep, "gradlew", "gradlew.bat",
-                 "settings.gradle", "src" + os.sep]
+                 "settings.gradle", "src" + os.sep, "lib" + os.sep]
 
 
 def is_windows():
@@ -110,9 +109,8 @@ def run():
     """
     os.chdir(WORKING_SUBDIR)
     gradle_cmd = GRADLEW_WINDOWS_CMD if is_windows() else GRADLEW_UNIX_CMD
-    print(os.getcwd())
     result = subprocess.run(
-        [gradle_cmd, "-PlibPath=" + LIB_PATH, "clean", "run", "--quiet"],
+        [gradle_cmd, "clean", "run", "--quiet"],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE)
     if result.returncode != 0:

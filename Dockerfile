@@ -18,3 +18,9 @@ RUN chmod +x /autograder/run_autograder
 # Force gradle download and start daemon.
 WORKDIR /autograder
 RUN ./gradlew clean
+
+# Download checkstyle library
+RUN mkdir -p lib
+WORKDIR lib
+RUN wget https://github.com/checkstyle/checkstyle/releases/download/checkstyle-10.12.1/checkstyle-10.12.1-all.jar
+WORKDIR /autograder

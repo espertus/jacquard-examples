@@ -8,7 +8,6 @@ import com.spertus.jacquard.junittester.JUnitTester;
 import com.spertus.jacquard.publisher.GradescopePublisher;
 import com.spertus.jacquard.syntaxgrader.*;
 
-import java.io.IOException;
 import java.util.*;
 
 public class Main {
@@ -56,7 +55,9 @@ public class Main {
 
         // Run unit tests.
         JUnitTester runner = new JUnitTester(OriginalMobTest.class, MobTest.class);
-        results.addAll(runner.run());
+        List<Result> junitResults = runner.run();
+        Result.changeVisibility(junitResults, Visibility.AFTER_DUE_DATE);
+        results.addAll(junitResults);
 
         // Ensure that immutable properties are declared private final.
         FieldModifierChecker fmChecker = FieldModifierChecker.makeChecker(

@@ -1,6 +1,6 @@
 package student;
 
-import com.spertus.jacquard.common.GradedTest;
+import com.spertus.jacquard.junittester.GradedTest;
 import org.junit.jupiter.api.*;
 
 import java.io.*;

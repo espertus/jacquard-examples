@@ -8,10 +8,10 @@ import com.spertus.jacquard.junittester.JUnitTester;
 import com.spertus.jacquard.publisher.GradescopePublisher;
 import com.spertus.jacquard.syntaxgrader.*;
 
+import java.io.IOException;
 import java.util.*;
 
 public class Main {
-
     public static Result performToStringTests() {
         List<Result> results = new ArrayList<>();
 
@@ -50,13 +50,13 @@ public class Main {
         final List<Result> results = new ArrayList<>();
         final Target mobJava = Target.fromPathString("src/main/java/student/Mob.java");
 
-        // Run unit tests.
-        JUnitTester runner = new JUnitTester(OriginalMobTest.class, MobTest.class);
-        results.addAll(runner.run());
-
         // Run checkstyle.
         CheckstyleGrader checkstyleGrader = new CheckstyleGrader("config/checks.xml", 1.0, 10.0);
         results.addAll(checkstyleGrader.grade(mobJava));
+
+        // Run unit tests.
+        JUnitTester runner = new JUnitTester(OriginalMobTest.class, MobTest.class);
+        results.addAll(runner.run());
 
         // Ensure that immutable properties are declared private final.
         FieldModifierChecker fmChecker = FieldModifierChecker.makeChecker(
@@ -84,6 +84,7 @@ public class Main {
         // Ensure that toString() was implemented correctly.
         results.add(performToStringTests());
 
+        // Display the results.
         new GradescopePublisher().displayResults(results);
     }
 }

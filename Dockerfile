@@ -1,11 +1,13 @@
-# docker build -t hw1 .
-# winpty docker run -it hw1 bash
+# docker build -t espertus/hw1 .
+# winpty docker run -it espertus/hw1 bash
 
 FROM gradescope/autograder-base:ubuntu-22.04-jdk17
 
-COPY . /autograder
+COPY config /autograder/config
+COPY gradle /autograder/gradle
+COPY src /autograder/src
+COPY gradlew.bat gradlew settings.gradle build.gradle run_autograder.py /autograder
 RUN ln /autograder/run_autograder.py /autograder/run_autograder
-COPY submission/Mob.java /autograder/submission
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends maven checkstyle && \

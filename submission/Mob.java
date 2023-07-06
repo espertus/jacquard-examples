@@ -59,8 +59,7 @@ public class Mob {
     }
 
     public boolean isAlive() {
-        throw new IllegalArgumentException("Deliberately thrown from isAlive()");
-//        return true; // VIOLATION
+        return true; // VIOLATION
 //        return getStatus() != Status.Dead;
     }
 
@@ -104,7 +103,6 @@ public class Mob {
         int actualDamage = damage > numHearts ? numHearts : damage;
         numHearts -= actualDamage;
         String text = actualDamage == 1 ? "heart" : "hearts";
-        System.out.println("takeDamage() no longer prints");
    //     System.out.printf("The %s took %d %s of damage.", type, actualDamage, text);
    //     System.out.println("It is now " + getStatus() + ".");
     }
@@ -116,8 +114,8 @@ public class Mob {
      */
     public void attack(Mob victim) {
         assert (isAggressive());
-        int damage = new Random().nextInt(maxDamage - minDamage) + minDamage;
-        victim.takeDamage(damage);
+        int DAMAGE = new Random().nextInt(maxDamage - minDamage) + minDamage;
+        victim.takeDamage(DAMAGE);
     }
 
     /**

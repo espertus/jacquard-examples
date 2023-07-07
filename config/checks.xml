@@ -89,10 +89,6 @@
   <!-- </module> -->
 
   <module name="TreeWalker">
-
-    <!-- Checks for Javadoc comments.                     -->
-    <!-- See https://checkstyle.org/config_javadoc.html -->
-
     <!-- Checks for Naming Conventions.                  -->
     <!-- See https://checkstyle.org/config_naming.html -->
     <module name="ConstantName"/>
@@ -107,6 +103,7 @@
 
     <!-- Checks for imports                              -->
     <!-- See https://checkstyle.org/config_imports.html -->
+    <!--<module name="AvoidStarImport"/>-->
     <module name="IllegalImport"/> <!-- defaults to sun.* packages -->
     <module name="RedundantImport"/>
     <module name="UnusedImports">
@@ -149,7 +146,9 @@
     <module name="EqualsHashCode"/>
     <module name="IllegalInstantiation"/>
     <module name="InnerAssignment"/>
-<!--    <module name="MagicNumber"/> -->
+    <module name="MagicNumber">
+      <property name="ignoreNumbers" value="0, 1, -1, 2, 21"/>
+    </module>
     <module name="MissingSwitchDefault"/>
     <module name="MultipleVariableDeclarations"/>
     <module name="SimplifyBooleanExpression"/>
@@ -159,7 +158,9 @@
     <!-- See https://checkstyle.org/config_design.html -->
     <module name="FinalClass"/>
     <module name="InterfaceIsType"/>
-    <module name="VisibilityModifier"/>
+    <module name="VisibilityModifier">
+      <property name="protectedAllowed" value="true"/>
+    </module>
 
     <!-- Miscellaneous other checks.                   -->
     <!-- See https://checkstyle.org/config_misc.html -->
@@ -174,13 +175,21 @@
       <property name="optional" value="true"/>
     </module>
 
-    <module name="SuppressionXpathSingleFilter">
-      <property name="files" value="MyTest.java"/>
-      <property name="checks" value="MagicNumber"/>
-      <property name="query" value="//CLASS_DEF[@text='MyTest']/OBJBLOCK/METHOD_DEF[@text='testOne']/IDENT"/>
+    <!-- https://checkstyle.org/config_filters.html#SuppressionXpathFilter -->
+    <module name="SuppressionXpathFilter">
+      <property name="file" value="${org.checkstyle.sun.suppressionxpathfilter.config}"
+                default="checkstyle-xpath-suppressions.xml" />
+      <property name="optional" value="true"/>
     </module>
-          
+
+    <!-- Disable some checks for test files. -->
+    <module name="SuppressionXpathSingleFilter">
+      <property name="files" value=".*Test.java"/>
+      <property name="checks" value="VisibilityModifier|MagicNumber"/>
+      <property name="query" value="//*"/>
+    </module>
+
+
   </module>
 
 </module>
-

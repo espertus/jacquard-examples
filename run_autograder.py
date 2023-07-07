@@ -6,7 +6,7 @@ import platform
 import shutil
 import subprocess
 
-SUBMISSION_FILES = ["Mob.java"]
+SUBMISSION_FILES = ["FavoritesIterator.java"]
 SUBMISSION_PACKAGE = "student"
 
 # All directories are relative. On the server, they are relative to /autograder.

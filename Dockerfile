@@ -1,5 +1,4 @@
-# docker build -t espertus/hw1 .
-# winpty docker run -it espertus/hw1 bash
+# docker build -t yourname/quiz1 .
 
 FROM gradescope/autograder-base:ubuntu-22.04-jdk17
 

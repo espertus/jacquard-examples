@@ -31,7 +31,7 @@ ext {
 ### Setup
 Create a new IntelliJ project with the below code,
 and configure the Checkstyle plugin to use
-[checks.xml](config/checks.xml).
+[checks.xml](config/checkstyle-rules.xml).
 
 ### Requirements
 You will need to implement the `Iterator<T>` interface.

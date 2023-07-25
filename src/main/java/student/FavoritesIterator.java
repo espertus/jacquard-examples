@@ -12,7 +12,8 @@ public class FavoritesIterator<T> implements Iterator<T> {
     public FavoritesIterator(List<T> items) {
     }
 
-    @Override
+    // Deliberate PMD violation (MissingOverride) on next line
+    // @Override
     public boolean hasNext() {
         return false;
     }
@@ -21,4 +22,7 @@ public class FavoritesIterator<T> implements Iterator<T> {
     public T next() {
         return null;
     }
+
+    // Deliberate checkstyle violation on next line
+    private void helper_method() {}
 }

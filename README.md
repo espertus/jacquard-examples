@@ -1,40 +1,74 @@
 # Jacquard Quiz 1 Example
 
 This is an example of a Jacquard autograder for a quiz.
-Most of the files are boilerplate. These are the directories
-and files that have code specific to the assignment:
 
-* `config/checks.xml` holds the checkstyle rules file
+## Instructions to teachers
+
+### Files
+
+These directories and files have code specific to the assignment:
+
+* `config/checkstyle-rules.xml` holds the checkstyle rules file
 * `src/main/java/student` contains
-   * `Main.java`, which has the `main` method that declares and runs the tests
-   * `FavoritesIterator.java`, placeholder code for testing the autograder locally
-   * `HiddenFavoriteIteratorsTest.java` and `ProvidedFavoritesIteratorTest`, which
-   contain JUnit 5 tests
+    * `Main.java`, which has the `main` method that controls the autograder
+    * `FavoritesIterator.java`, placeholder for student code for testing
+      the autograder locally
+    * `HiddenFavoriteIteratorsTest.java` and `ProvidedFavoritesIteratorTest`,
+      which
+      contain JUnit 5 tests of student code
+* `submissions` (which is not required) holds sample submissions to test
+  the grader on Gradescope
 
 Any of the above files could have different names or packages.
 
-The constants at the top of `run_autograder.py` were set to:
+#### run_autograder.py
+
+The constants at the top of `run_autograder.py` reference the above
+files and directories/packages:
+
 ```python
 SUBMISSION_FILES = ["FavoritesIterator.java"]
 SUBMISSION_PACKAGE = "student"
 ```
+You should not have to change any other part of `run_autograder.py`.
 
-The main class was specified in `build.gradle`:
+#### build.gradle
+
+The main class must be specified in `build.gradle`:
+
 ```groovy
 ext {
     javaMainClass = "student.Main"
 }
 ```
+You are free to make other additions to `build.gradle`, such
+as adding dependencies.
+
+Gradle 8.0 or higher is required.
+
+### Uploading to Gradescope
+
+To build a Docker container, run the following command, substituting:
+your Docker username for `username`:
+
+```
+docker build -t username/quiz1
+```
+
+This video shows how to create a programming assignment and upload an autograder.
 
 ## Instructions to students
 
 ### Setup
+
 Create a new IntelliJ project with the below code,
 and configure the Checkstyle plugin to use
-[checks.xml](config/checkstyle-rules.xml).
+[checkstyle-rules.xml](config/checkstyle-rules.xml).
 
 ### Requirements
-You will need to implement the `Iterator<T>` interface.
+
+You will need to implement the `Iterator<T>` interface 
+in the class `FavoritesIterator`.
 You may not make use of any existing implementations of
 `Iterator<T>` or `Iterable<T>` while doing so. Specifically,
 you may not call any other implementations of `next()` or
@@ -45,11 +79,15 @@ behind the scenes.
 ### Grading
 
 Grading will be based on:
-* the provided tests (20 points)
-* hidden tests (40 points)
+
+* the provided unit tests (20 points)
+* hidden unit tests (40 points)
 * checkstyle (5 points)
+* PMD (5 points)
+* meeting the requirements (30 points)
 
 ### Submission
+
 When done, you should upload only the source file
 `FavoritesIterator.java`.
 

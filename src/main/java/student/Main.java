@@ -35,7 +35,7 @@ public class Main {
         SyntaxConditionGrader forGrader = new SyntaxConditionGrader(
                 0,
                 "enhanced for-loop",
-                5.0,
+                10.0,
                 node -> (node instanceof ForEachStmt)
         );
 
@@ -45,7 +45,7 @@ public class Main {
         SyntaxConditionGrader nextGrader = new SyntaxConditionGrader(
                 0,
                 "iterator method calls",
-                5.0,
+                20.0,
                 node -> {
                     // Check if method call is to next() or hasNext().
                     if (node instanceof MethodCallExpr methodCallExpr &&

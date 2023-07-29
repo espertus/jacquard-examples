@@ -15,40 +15,36 @@ import static java.lang.System.exit;
 
 public class Main {
     public static void main(String[] args) {
-        final List<Result> results = new ArrayList<>();
         Autograder.init();
         final Target target = Target.fromPathString("src/main/java/student/FavoritesIterator.java");
 
-        // Run checkstyle.
+        // Create checkstyle grader.
         CheckstyleGrader checkstyleGrader = new CheckstyleGrader(
                 "config/checkstyle-rules.xml",
                 1.0,
                 5.0);
-        results.addAll(checkstyleGrader.grade(target));
 
-        // Run PMD just to check for missing override annotations.
+        // Create PMD grader.
         PmdGrader pmdGrader = PmdGrader.createFromRules(
                 1.0,
                 5.0,
                 "category/java/bestpractices.xml",
                 "MissingOverride");
-        results.addAll(pmdGrader.grade(target));
 
-        // Make sure students did not use enhanced for loops.
+        // Create grader to make sure students did not use enhanced for-loops.
         SyntaxConditionGrader forGrader = new SyntaxConditionGrader(
                 0,
                 "enhanced for-loop",
                 5.0,
                 node -> (node instanceof ForEachStmt)
         );
-        results.addAll(forGrader.grade(target));
 
-        // Make sure students did not call other implementations of
-        // hasNext() or next()
-        List<String> methodNames = List.of("hasNext", "next");
+        // Create grader to make sure students did not call the hasNext()
+        // or next() methods of other classes.
+        final List<String> methodNames = List.of("hasNext", "next");
         SyntaxConditionGrader nextGrader = new SyntaxConditionGrader(
                 0,
-                "calls of other class's iterator methods",
+                "iterator method calls",
                 5.0,
                 node -> {
                     // Check if method call is to next() or hasNext().
@@ -60,16 +56,23 @@ public class Main {
                     }
                     return false;
                 });
-        results.addAll(nextGrader.grade(target));
 
-        // Run unit tests.
-        JUnitTester runner = new JUnitTester(HiddenFavoriteIteratorsTest.class, ProvidedFavoritesIteratorTest.class);
+        // Run all graders, collecting results.
+        List<Result> results = Grader.gradeAll(
+                target,
+                checkstyleGrader, pmdGrader, forGrader, nextGrader);
+
+        // Run unit tests, adding on to existing results.
+        JUnitTester runner = new JUnitTester(
+                HiddenFavoriteIteratorsTest.class,
+                ProvidedFavoritesIteratorTest.class);
         List<Result> junitResults = runner.run();
         results.addAll(junitResults);
 
         // Display the results.
         new GradescopePublisher().displayResults(results);
 
-        exit(0); // required by gradle
+        // Explicitly exit (required by Gradle).
+        exit(0);
     }
 }

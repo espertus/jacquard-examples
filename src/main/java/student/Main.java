@@ -16,6 +16,8 @@ import static java.lang.System.exit;
 public class Main {
     public static void main(String[] args) {
         Autograder.init();
+
+        // For this assignment, students upload only a single file.
         final Target target = Target.fromPathString("src/main/java/student/FavoritesIterator.java");
 
         // Create checkstyle grader.
@@ -64,7 +66,9 @@ public class Main {
 
         // Run unit tests, adding on to existing results.
         JUnitTester runner = new JUnitTester(
+                // 40 points
                 HiddenFavoriteIteratorsTest.class,
+                // 20 points
                 ProvidedFavoritesIteratorTest.class);
         List<Result> junitResults = runner.run();
         results.addAll(junitResults);

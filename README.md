@@ -1,8 +1,14 @@
 # Jacquard Quiz 1 Example
 
-This is an example of a Jacquard autograder for a quiz.
+This is an example of a [Jacquard](https://github.com/espertus/jacquard)
+autograder for a quiz.
 
-## Instructions to teachers
+## Teacher Instructions
+
+### Software Requirements
+
+* Gradle 8.0 or higher
+* Python 3 in order to test locally by executing `run_autograder.py`
 
 ### Files
 
@@ -14,10 +20,11 @@ These directories and files have code specific to the assignment:
     * `FavoritesIterator.java`, placeholder for student code for testing
       the autograder locally
     * `HiddenFavoriteIteratorsTest.java` and `ProvidedFavoritesIteratorTest`,
-      which
-      contain JUnit 5 tests of student code
-* `submissions` (which is not required) holds sample submissions to test
-  the grader on Gradescope
+      which contain JUnit 5 tests of student code
+* `submission` holds a sample submission (required for testing the script
+  `run_autograder.py` locally)
+* `submissions` (which is not required) holds sample submissions to manually
+  test the grader on Gradescope
 
 Any of the above files could have different names or packages.
 
@@ -30,7 +37,11 @@ files and directories/packages:
 SUBMISSION_FILES = ["FavoritesIterator.java"]
 SUBMISSION_PACKAGE = "student"
 ```
+
 You should not have to change any other part of `run_autograder.py`.
+
+You can test your autograder locally by putting a sample submission in the
+top-level `submission` directory.
 
 #### build.gradle
 
@@ -41,23 +52,30 @@ ext {
     javaMainClass = "student.Main"
 }
 ```
-You are free to make other additions to `build.gradle`, such
-as adding dependencies.
+
+You are free to make other additions to `build.gradle`, such as adding
+dependencies.
 
 Gradle 8.0 or higher is required.
 
 ### Uploading to Gradescope
 
-To build a Docker container, run the following command, substituting:
-your Docker username for `username`:
+#### Docker
+
+To build a Docker container, run the following command. You must replace
+`username` with your Docker username, and you may replace `quiz1-autograder`
+with a name of your choice.
 
 ```
-docker build -t username/quiz1
+docker build -t username/quiz1-autograder.
 ```
 
-This video shows how to create a programming assignment and upload an autograder.
+You will then need to push the container to Docker Hub. It is highly recommended
+that you put it in a private repository so students don't have access. You will
+need to add `gradescopeecs` as a collaborator. This requires a pro Docker
+subscription (currently $7/month or $60/year).
 
-## Instructions to students
+## Student Instructions
 
 ### Setup
 
@@ -67,7 +85,7 @@ and configure the Checkstyle plugin to use
 
 ### Requirements
 
-You will need to implement the `Iterator<T>` interface 
+You will need to implement the `Iterator<T>` interface
 in the class `FavoritesIterator`.
 You may not make use of any existing implementations of
 `Iterator<T>` or `Iterable<T>` while doing so. Specifically,

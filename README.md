@@ -9,6 +9,10 @@ autograder for a quiz.
 
 * Gradle 8.0 or higher
 * Python 3 in order to test locally by executing `run_autograder.py`
+* bash (included on OS X and Linux)
+
+For bash on Windows, we use and recommend [Git for Windows](https://gitforwindows.org/),
+although any bash implementation that includes `dos2unix` should work.
 
 ### Files
 
@@ -56,9 +60,25 @@ ext {
 You are free to make other additions to `build.gradle`, such as adding
 dependencies.
 
-Gradle 8.0 or higher is required.
+### Shell scripts
+
+These files are needed if you are providing the autograder to Gradescope as a
+zip file. You should not need to modify them.
+
+* `make_autograder.sh`: creates the zip file for you to upload
+* `run_autograder`: launches the autograder
+* `setup.sh`: sets up the Gradescope server
+
+### Dockerfile
+
+This file is needed only if you are providing the autograder to Gradescope
+through Docker Hub. You should not need to modify it.
 
 ### Uploading to Gradescope
+
+#### Zip file
+
+To create a zip file, run `make_autograder.sh` from the command line.
 
 #### Docker
 

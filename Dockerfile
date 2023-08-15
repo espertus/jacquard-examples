@@ -1,12 +1,12 @@
-# docker build -t yourname/quiz1 .
+# docker build -t yourname/quiz1-autograder .
 
 FROM gradescope/autograder-base:ubuntu-22.04-jdk17
 
 COPY config /autograder/config
 COPY gradle /autograder/gradle
 COPY src /autograder/src
-COPY gradlew.bat gradlew settings.gradle build.gradle run_autograder.py /autograder
-RUN ln /autograder/run_autograder.py /autograder/run_autograder
+COPY gradlew.bat gradlew settings.gradle build.gradle run_autograder /autograder
+COPY run_autograder.py /autograder/run_autograder
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends maven checkstyle && \

@@ -20,7 +20,7 @@ WORKING_JAVA_SUBDIR = WORKING_SUBDIR + SOURCE_SUBDIR + os.sep
 GRADLEW_WINDOWS_CMD = "gradlew.bat"
 GRADLEW_UNIX_CMD = "./gradlew"
 # This includes directories, which must end with a separator.
-FILES_TO_COPY = ["build.gradle", "gradle" + os.sep, "gradlew", "gradlew.bat",
+FILES_TO_COPY = ["build.gradle", "gradle" + os.sep, "gradlew",
                  "settings.gradle", "src" + os.sep, "lib" + os.sep,
                  "config" + os.sep]
 
@@ -122,10 +122,11 @@ def run():
 
 
 def output(s):
-    """Output to stdout if run locally or a file if run on the Gradescope server. """
+    """Output to stdout and to a file if run on the Gradescope server. """
     if is_local():
         print(s)
     else:
+        print(s)
         with open(GRADESCOPE_RESULTS_PATH, "w") as text_file:
             text_file.write(s)
 

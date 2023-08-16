@@ -2,12 +2,14 @@
 
 FROM gradescope/autograder-base:ubuntu-22.04-jdk17
 
+# Copy needed directories and files. Instructors may add to these.
 COPY config /autograder/config
 COPY gradle /autograder/gradle
 COPY src /autograder/src
-COPY gradlew.bat gradlew settings.gradle build.gradle run_autograder /autograder
+COPY gradlew.bat gradlew settings.gradle build.gradle /autograder
 COPY run_autograder.py /autograder/run_autograder
 
+# Update packages.
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends maven checkstyle && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

@@ -20,7 +20,7 @@ WORKING_JAVA_SUBDIR = WORKING_SUBDIR + SOURCE_SUBDIR + os.sep
 GRADLEW_WINDOWS_CMD = "gradlew.bat"
 GRADLEW_UNIX_CMD = "./gradlew"
 # This includes directories, which must end with a separator.
-FILES_TO_COPY = ["build.gradle", "gradle" + os.sep, "gradlew",
+FILES_TO_COPY = ["build.gradle", "gradle" + os.sep, "gradlew", "gradlew.bat",
                  "settings.gradle", "src" + os.sep, "lib" + os.sep,
                  "config" + os.sep]
 

@@ -78,7 +78,22 @@ through Docker Hub. You should not need to modify it.
 
 #### Zip file
 
-To create a zip file, run `make_autograder.sh` from the command line.
+To create a zip file, run `./make_autograder.sh` from the command line.
+
+To configure the autograder on Gradescope:
+1. Click on "Configure Autograder" in the left sidebar.
+2. Select "Zip file upload".
+3. Click on "Replace Autograder (.zip)".
+4. Select:
+   * Base Image OS: Ubuntu
+   * Base Image Version: 22.04
+   * Base Image Variant: JDK 17
+5. Click on "Update Autograder". (You may have to wait up to a minute for
+   anything to happen. The button will go gray when the build begins.)
+6. Wait for the "Built as of" time to be updated.
+
+![screenshot showing Zip file upload of autograder.zip with Ubuntu 22.04 and 
+JDK 17 selected](images/configure-autograder.png)
 
 #### Docker
 

@@ -1,17 +1,20 @@
 # Jacquard Quiz 1 Example
 
 This is an example of a [Jacquard](https://github.com/espertus/jacquard)
-autograder for a quiz.
+autograder for a quiz. See the [parent directory](../README.md) for a
+video overview and instructions.
 
 ## Teacher Instructions
 
 ### Software Requirements
 
 * Gradle 8.0 or higher
-* Python 3 in order to test locally by executing `run_autograder.py`
+* Python 3 if you want to test locally by executing `run_autograder.py`
+  (optional)
 * bash (included on OS X and Linux)
 
-For bash on Windows, we use and recommend [Git for Windows](https://gitforwindows.org/),
+For bash on Windows, we use and
+recommend [Git for Windows](https://gitforwindows.org/),
 although any bash implementation that includes `dos2unix` should work.
 
 ### Files
@@ -81,18 +84,19 @@ through Docker Hub. You should not need to modify it.
 To create a zip file, run `./make_autograder.sh` from the command line.
 
 To configure the autograder on Gradescope:
+
 1. Click on "Configure Autograder" in the left sidebar.
 2. Select "Zip file upload".
 3. Click on "Replace Autograder (.zip)".
 4. Select:
-   * Base Image OS: Ubuntu
-   * Base Image Version: 22.04
-   * Base Image Variant: JDK 17
+    * Base Image OS: Ubuntu
+    * Base Image Version: 22.04
+    * Base Image Variant: JDK 17
 5. Click on "Update Autograder". (You may have to wait up to a minute for
    anything to happen. The button will go gray when the build begins.)
 6. Wait for the "Built as of" time to be updated.
 
-![screenshot showing Zip file upload of autograder.zip with Ubuntu 22.04 and 
+![screenshot showing Zip file upload of autograder.zip with Ubuntu 22.04 and
 JDK 17 selected](../images/configure-autograder.png)
 
 #### Docker

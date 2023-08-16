@@ -12,3 +12,6 @@ mv source/config source/gradle source/src /autograder
 mv source/gradlew source/settings.gradle source/build.gradle /autograder
 mv source/run_autograder.py /autograder/run_autograder
 chmod a+x run_autograder gradlew
+
+# This runs Gradle once, to download any needed files.
+./gradlew clean

@@ -93,7 +93,7 @@ To configure the autograder on Gradescope:
 6. Wait for the "Built as of" time to be updated.
 
 ![screenshot showing Zip file upload of autograder.zip with Ubuntu 22.04 and 
-JDK 17 selected](images/configure-autograder.png)
+JDK 17 selected](../images/configure-autograder.png)
 
 #### Docker
 

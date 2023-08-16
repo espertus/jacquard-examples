@@ -38,7 +38,7 @@ idea {
 
 tasks.register('installCheckstyle', Download) {
     src 'https://github.com/checkstyle/checkstyle/releases/download/checkstyle-10.12.1/checkstyle-10.12.1-all.jar'
-    dest 'lib'
+    dest 'lib/checkstyle-10.12.1-all.jar'
     overwrite false
 }
 

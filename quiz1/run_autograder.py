@@ -21,8 +21,7 @@ GRADLEW_WINDOWS_CMD = "gradlew.bat"
 GRADLEW_UNIX_CMD = "./gradlew"
 # This includes directories, which must end with a separator.
 FILES_TO_COPY = ["build.gradle", "gradle" + os.sep, "gradlew", "gradlew.bat",
-                 "src" + os.sep, "lib" + os.sep,
-                 "config" + os.sep]
+                 "src" + os.sep, "lib" + os.sep, "config" + os.sep]
 
 
 def is_windows():
@@ -58,7 +57,8 @@ def copy_source_files():
     """Copy all source code and gradle files to working directory."""
     for file in FILES_TO_COPY:
         if file.endswith(os.sep):
-            shutil.copytree(file, WORKING_SUBDIR + file)
+            if os.path.isdir(file):
+                shutil.copytree(file, WORKING_SUBDIR + file)
         else:
             shutil.copy(file, WORKING_SUBDIR)
 

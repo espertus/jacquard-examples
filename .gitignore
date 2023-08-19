@@ -20,3 +20,4 @@ checkstyle-results.xml
 results/
 working/
 autograder.zip
+*.greenshot

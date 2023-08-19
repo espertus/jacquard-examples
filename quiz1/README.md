@@ -35,30 +35,39 @@ These directories and files have code specific to the assignment:
 
 Any of the above files could have different names or packages.
 
-#### run_autograder.py
+#### config.ini
 
-The constants at the top of `run_autograder.py` reference the above
-files and directories/packages:
+The submission package and files are specified in `config.ini` and should be
+edited if you change the package name or required files. Currently, package
+names must have only a single part (e.g., "student", not "edu.myschool.student").
 
-```python
-SUBMISSION_FILES = ["FavoritesIterator.java"]
-SUBMISSION_PACKAGE = "student"
 ```
+[submission]
+package = student
+files = [FavoritesIterator.java]
+```
+The list of files is comma-separated, with optional whitespace.
 
-You should not have to change any other part of `run_autograder.py`.
+#### run_autograder and run_autograder.py
 
-You can test your autograder locally by putting a sample submission in the
-top-level `submission` directory.
+These files, which you should not have to modify, are run on Gradescope to
+build and run the autograder on a student submission. You can (but do not need
+to) test your autograder locally by putting a sample submission in the
+appropriate package in the top-level `submission` directory and executing
+either of these scripts.
 
 #### build.gradle
 
-The main class must be specified in `build.gradle`:
+The main class of the autograder is specified in `build.gradle`:
 
 ```groovy
 ext {
     javaMainClass = "student.Main"
 }
 ```
+
+You will need to change it if you use a different package/class name for
+your main autograder class.
 
 You are free to make other additions to `build.gradle`, such as adding
 dependencies.

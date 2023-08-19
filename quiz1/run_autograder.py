@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import configparser
 import json
 import os
 import platform
@@ -9,6 +10,14 @@ import subprocess
 # The next two lines should usually be modified for new assignments.
 SUBMISSION_FILES = ["FavoritesIterator.java"]
 SUBMISSION_PACKAGE = "student"
+
+# Configuration file
+CONFIG_PATH = "config.ini"
+CONFIG_SUBMISSION_SECTION_NAME = "submission"
+CONFIG_SECTIONS = [CONFIG_SUBMISSION_SECTION_NAME]
+CONFIG_PACKAGE_KEY = "package"
+CONFIG_FILES_KEY = "files"
+CONFIG_KEYS = [CONFIG_PACKAGE_KEY, CONFIG_FILES_KEY]
 
 # All directories are relative. On the server, they are relative to /autograder.
 SUBMISSION_SUBDIR = "submission" + os.sep
@@ -36,10 +45,7 @@ def is_local():
 
 def init():
     """Initialize the environment before compilation can be done."""
-    if is_local():
-        # TODO: If submission directory isn't present, create it and copy file.
-        pass
-    else:
+    if not is_local():
         os.makedirs(GRADESCOPE_RESULTS_SUBDIR, exist_ok=True)
 
     create_working_dir()
@@ -82,21 +88,68 @@ def ensure_file_in_package(file_path: str, package: str):
         f"File {file_path} does not contain the expected package declaration: {pkg_stmt}")
 
 
+def read_config_file() -> (str, list[str]):
+    """Read the submission package and filenames from config file
+
+    :raise Exception: if the config file cannot be found or has invalid content
+    """
+
+    # Make sure config file has required section and keys.
+    config = configparser.ConfigParser()
+    if not config.read(CONFIG_PATH):
+        raise Exception(
+            f"Unable to read configuration file {CONFIG_PATH}"
+        )
+    if CONFIG_SUBMISSION_SECTION_NAME not in config.sections():
+        raise Exception(
+            f"Did not find section '{CONFIG_SUBMISSION_SECTION_NAME}' in {CONFIG_PATH}"
+        )
+    if len(config.sections()) > len(CONFIG_SECTIONS):
+        sections = config.sections()
+        sections.remove(CONFIG_SUBMISSION_SECTION_NAME)
+        raise Exception(
+            f"Unexpected section(s) in {CONFIG_PATH}: {sections}"
+        )
+    section = config[CONFIG_SUBMISSION_SECTION_NAME]
+    for key in CONFIG_KEYS:
+        if key not in section:
+            raise Exception(
+                f"Did not find key '{key}' in section '{CONFIG_SUBMISSION_SECTION_NAME}' of {CONFIG_PATH}"
+            )
+    if len(section) > len(CONFIG_KEYS):
+        keys = list(section.keys())
+        for key in CONFIG_KEYS:
+            keys.remove(key)
+        raise Exception(
+            f"Unexpected key(s) in {CONFIG_PATH}: {keys}"
+        )
+
+    # Extract configuration values.
+    package = section[CONFIG_PACKAGE_KEY]
+    files = section[CONFIG_FILES_KEY]
+    if len(files) < 2 or files[0] != '[' or files[-1] != ']':
+        raise Exception(
+            f"Could not parse {CONFIG_FILES_KEY} value '{files}' in section '{CONFIG_SUBMISSION_SECTION_NAME}' of {CONFIG_PATH}")
+    files_list = [file.strip() for file in files[1:-1].split(',')]
+    return (package, files_list)
+
+
 def copy_req_files():
     """Copy student-provided files into the appropriate server directory.
 
     :raise Exception: if a required file is not found
 
     """
-    path = package_to_path(SUBMISSION_PACKAGE)
+    package, files = read_config_file()
+    path = package_to_path(package)
     dest_path = WORKING_JAVA_SUBDIR + path
     os.makedirs(dest_path, exist_ok=True)
 
-    for file in SUBMISSION_FILES:
+    for file in files:
         file_path = SUBMISSION_SUBDIR + file
         if os.path.exists(file_path):
             if file_path.endswith(".java"):
-                ensure_file_in_package(file_path, SUBMISSION_PACKAGE)
+                ensure_file_in_package(file_path, package)
             shutil.copy(file_path, dest_path)
         else:
             raise Exception(f"File {file_path} not found.")

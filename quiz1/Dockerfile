@@ -6,7 +6,7 @@ FROM gradescope/autograder-base:ubuntu-22.04-jdk17
 COPY config /autograder/config
 COPY gradle /autograder/gradle
 COPY src /autograder/src
-COPY gradlew.bat gradlew build.gradle /autograder
+COPY gradlew.bat gradlew build.gradle config.ini /autograder
 COPY run_autograder.py /autograder/run_autograder
 
 # Update packages.

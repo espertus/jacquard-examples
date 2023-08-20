@@ -7,10 +7,6 @@ import platform
 import shutil
 import subprocess
 
-# The next two lines should usually be modified for new assignments.
-SUBMISSION_FILES = ["FavoritesIterator.java"]
-SUBMISSION_PACKAGE = "student"
-
 # Configuration file
 CONFIG_PATH = "config.ini"
 CONFIG_SUBMISSION_SECTION_NAME = "submission"

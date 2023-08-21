@@ -10,9 +10,9 @@ https://northeastern.hosted.panopto.com/Panopto/Pages/Viewer.aspx?pid=c1dee1d0-d
 or select individual videos:
 
 1. [Downloading Jacquard examples](https://northeastern.hosted.panopto.com/Panopto/Pages/Viewer.aspx?pid=c1dee1d0-d598-487f-8067-b06001175c50)
-   (44 seconds)
+   (0:44)
 2. [Opening Quiz 1 example in IntelliJ](https://northeastern.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=9d058c84-4bbf-4a23-8ff6-b0600110b1ed)
-   (54 seconds)
+   (0:54)
 3. [Viewing student instructions for Quiz 1](https://northeastern.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=ee302e80-84d0-4015-872c-b0600110b580)
    (1:21)
 4. [Viewing starter code and tests (and setting JDK)](https://northeastern.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=a2b356d7-f5dd-4c4f-8b26-b0600110b1b5)
@@ -21,8 +21,8 @@ or select individual videos:
    (5:26)
 6. [Running the autograder locally](https://northeastern.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=68d127f1-86ec-4cdc-a110-b06001339b3a)
    (1:46)
-7. [Building autograder zip file](https://northeastern.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=ee6bc091-4d92-42e5-8eb3-b0600155f875)
-   (0:37)
+7. [Testing and building autograder zip file](https://northeastern.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=ee6bc091-4d92-42e5-8eb3-b0600155f875)
+   (1:22)
 8. [Creating assignment on Gradescope](https://northeastern.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=cd3b672d-5be6-4af4-af18-b0600156675c)
    (0:52)
 9. [Uploading and testing autograder](https://northeastern.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=9742091c-558a-46be-8cb4-b06001565d99)

@@ -1,4 +1,5 @@
 // placeholder for student submission
+
 package student;
 
 import java.util.*;
@@ -24,5 +25,5 @@ public class FavoritesIterator<T> implements Iterator<T> {
     }
 
     // Deliberate checkstyle violation on next line
-    private void helper_method() {}
+    private void helper_method() { }
 }

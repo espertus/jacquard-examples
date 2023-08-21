@@ -41,8 +41,8 @@ features:
 
 ## Support
 
-For now,
-email [Ellen](https://www.khoury.northeastern.edu/people/ellen-spertus/)
-directly. You can
-also [create issues](https://github.com/espertus/jacquard-examples/issues)
+There are low-volume Google groups [jacquard-announce](https://groups.google.com/g/jacquard-announce) 
+and [jacquard-discuss](https://groups.google.com/g/jacquard-discuss). 
+
+You can also [create issues](https://github.com/espertus/jacquard-examples/issues)
 (feature requests and bug reports).

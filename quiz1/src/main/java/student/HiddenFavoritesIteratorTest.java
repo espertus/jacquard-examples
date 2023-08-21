@@ -9,7 +9,7 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class HiddenFavoriteIteratorsTest {
+public class HiddenFavoritesIteratorTest {
     private static final List<String> favoriteSiblings = List.of("Michael", "Debby", "Andrea");
     private static final List<Integer> favoriteBases = List.of(2, 8, 10, 16);
     private static final List<Integer> favoriteDecimalDigits = List.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);

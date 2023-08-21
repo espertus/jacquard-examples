@@ -67,7 +67,7 @@ public class Main {
         // Run unit tests, adding on to existing results.
         JUnitTester runner = new JUnitTester(
                 // 40 points
-                HiddenFavoriteIteratorsTest.class,
+                HiddenFavoritesIteratorTest.class,
                 // 20 points
                 ProvidedFavoritesIteratorTest.class);
         List<Result> junitResults = runner.run();

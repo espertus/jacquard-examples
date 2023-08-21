@@ -3,10 +3,10 @@
 FROM gradescope/autograder-base:ubuntu-22.04-jdk17
 
 # Copy needed directories and files. Instructors may add to these.
-COPY config /autograder/config
-COPY gradle /autograder/gradle
-COPY src /autograder/src
-COPY gradlew.bat gradlew build.gradle config.ini /autograder
+COPY ../quiz1/config /autograder/config
+COPY ../quiz1/gradle /autograder/gradle
+COPY ../quiz1/src /autograder/src
+COPY ../quiz1/gradlew.bat gradlew build.gradle config.ini /autograder
 COPY run_autograder.py /autograder/run_autograder
 
 # Update packages.

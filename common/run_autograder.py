@@ -8,7 +8,7 @@ import shutil
 import subprocess
 
 # Configuration file
-CONFIG_PATH = "config.ini"
+CONFIG_PATH = "../quiz1/config.ini"
 CONFIG_SUBMISSION_SECTION_NAME = "submission"
 CONFIG_SECTIONS = [CONFIG_SUBMISSION_SECTION_NAME]
 CONFIG_PACKAGE_KEY = "package"
@@ -50,8 +50,9 @@ def init():
 
 
 def create_working_dir():
-    """Create the working directory for compilation/execution."""
-    shutil.rmtree(WORKING_SUBDIR, ignore_errors=True)
+    """Create a fresh working directory for compilation/execution."""
+    if os.path.isdir(WORKING_SUBDIR):
+        shutil.rmtree(WORKING_SUBDIR, ignore_errors=False)
     os.mkdir(WORKING_SUBDIR)
 
 

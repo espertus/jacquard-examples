@@ -9,13 +9,12 @@ video overview and instructions.
 ### Software Requirements
 
 * Gradle 8.0 or higher
-* Python 3 if you want to test locally by executing `run_autograder.py`
+* Python 3 if you want to test locally by executing `test_autograder.py`
   (optional)
 * bash (included on OS X and Linux)
 
 For bash on Windows, we use and
-recommend [Git for Windows](https://gitforwindows.org/),
-although any bash implementation that includes `dos2unix` should work.
+recommend [Git for Windows](https://gitforwindows.org/) 2.41 or higher.
 
 ### Files
 
@@ -28,8 +27,8 @@ These directories and files have code specific to the assignment:
       the autograder locally
     * `HiddenFavoriteIteratorsTest.java` and `ProvidedFavoritesIteratorTest`,
       which contain JUnit 5 tests of student code
-* `submission` holds a sample submission (required for testing the script
-  `run_autograder.py` locally)
+* `submission` holds a sample submission (required if you want to run
+  `test_autograder.py` locally)
 * `submissions` (which is not required) holds sample submissions to manually
   test the grader on Gradescope
 
@@ -47,14 +46,6 @@ package = student
 files = [FavoritesIterator.java]
 ```
 The list of files is comma-separated, with optional whitespace.
-
-#### run_autograder and run_autograder.py
-
-These files, which you should not have to modify, are run on Gradescope to
-build and run the autograder on a student submission. You can (but do not need
-to) test your autograder locally by putting a sample submission in the
-appropriate package in the top-level `submission` directory and executing
-either of these scripts.
 
 #### build.gradle
 
@@ -74,17 +65,14 @@ dependencies.
 
 ### Shell scripts
 
-These files are needed if you are providing the autograder to Gradescope as a
-zip file. You should not need to modify them.
+#### test_autograder.sh
 
-* `make_autograder.sh`: creates the zip file for you to upload
-* `run_autograder`: launches the autograder
-* `setup.sh`: sets up the Gradescope server
+This tests the autograder on the file(s) in the `submission` subdirectory.
+It requires a Python 3 interpreter.
 
-### Dockerfile
+#### make_autograder.sh
 
-This file is needed only if you are providing the autograder to Gradescope
-through Docker Hub. You should not need to modify it.
+This creates the zip file for you to upload to Gradescope.
 
 ### Uploading to Gradescope
 
@@ -107,21 +95,6 @@ To configure the autograder on Gradescope:
 
 ![screenshot showing Zip file upload of autograder.zip with Ubuntu 22.04 and
 JDK 17 selected](../images/configure-autograder.png)
-
-#### Docker
-
-To build a Docker container, run the following command. You must replace
-`username` with your Docker username, and you may replace `quiz1-autograder`
-with a name of your choice.
-
-```
-docker build -t username/quiz1-autograder.
-```
-
-You will then need to push the container to Docker Hub. It is highly recommended
-that you put it in a private repository so students don't have access. You will
-need to add `gradescopeecs` as a collaborator. This requires a pro Docker
-subscription (currently $7/month or $60/year).
 
 ## Student Instructions
 

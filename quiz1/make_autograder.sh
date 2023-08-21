@@ -1,9 +1,18 @@
 #!/usr/bin/env bash
 
+DIRS_TO_COPY=("lib/" "config/" "gradle/" "src/")
+GRADLE_FILES=("gradlew" "build.gradle" "gradlew.bat")
+CONFIG_FILE=("config.ini")
+COMMON_DIR="../common"
+SCRIPTS=("run_autograder" "run_autograder.sh" "setup.sh")
+SCRIPT_PATHS=("${SCRIPTS[@]/#/$COMMON_DIR/}")
+
 echo "Removing carriage returns from scripts..."
-dos2unix setup.sh
+for item in "${SCRIPT_PATHS[@]}"; do
+    echo dos2unix "$item"
+done
 
 echo "Building Autograder..."
-zip -r autograder.zip lib/ config/ gradle/ src/ gradlew build.gradle gradlew.bat run_autograder run_autograder.py setup.sh config.ini
+echo zip -r autograder.zip ${DIRS_TO_COPY[@]} ${GRADLE_FILES[@]} ${SCRIPTS[@]} $CONFIG_FILE
 
 echo "Build complete."

@@ -1,8 +1,7 @@
 # Jacquard Examples
 
-[Jacquard](https://github.com/espertus/jacquard) is a Java autograder for
-Gradescope. This repo is for sample graders illustrating how to use Jacquard.
-
+[Jacquard](https://github.com/espertus/jacquard) [[Javadoc](https://ellenspertus.com/jacquard/)] is a Java autograder for
+Gradescope. This repo is for sample graders illustrating how to use Jacquard. 
 ## Video Instructions
 
 For video instructions, see the [Getting started with Jacquard Quiz 1 playlist](
@@ -46,3 +45,5 @@ and [jacquard-discuss](https://groups.google.com/g/jacquard-discuss).
 
 You can also [create issues](https://github.com/espertus/jacquard-examples/issues)
 (feature requests and bug reports).
+
+[![Javadoc](https://img.shields.io/badge/JavaDoc-Online-green)](https://ellenspertus.com/jacquard/)

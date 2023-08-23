@@ -48,7 +48,7 @@ See [Refreshing the Jacquard library](https://northeastern.hosted.panopto.com/Pa
 2. Right-click (or control-click) on the project name.
 3. Select `Refresh Gradle Dependencies`.
 
-> ![screenshot](images/refresh-jar.png)
+![screenshot](images/refresh-jar.png)
 
 ## Support
 

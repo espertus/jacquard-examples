@@ -52,7 +52,7 @@ See [Refreshing the Jacquard library](https://northeastern.hosted.panopto.com/Pa
 or follow these steps in IntelliJ:
 
 1. Click on `Gradle` in the right sidebar.
-2. Right-click (or control-click) on the project name.
+2. Right-click (or control-click) on the project name (or the elephant icon to its left).
 3. Select `Refresh Gradle Dependencies`.
 
 ![screenshot](images/refresh-jar.png)

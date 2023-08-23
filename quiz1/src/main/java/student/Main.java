@@ -18,7 +18,7 @@ public class Main {
         Autograder.init();
 
         // For this assignment, students upload only a single file.
-        final Target target = Target.fromPathString("src/main/java/student/FavoritesIterator.java");
+        final Target target = Target.fromClass(FavoritesIterator.class);
 
         // Create checkstyle grader.
         CheckstyleGrader checkstyleGrader = new CheckstyleGrader(

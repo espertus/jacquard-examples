@@ -142,7 +142,9 @@ Grading will be based on:
   * Our hidden buggy implementations fail your tests [20 points]
   * Your implementation passes our hidden tests [20 points]
 * Code coverage [10 points]
+  * `EmptyListOfString` [2 points]
+  * `NonEmptyListOfString` [8 points]
 
 Your code coverage score will be proportional to your line coverage.
-For example, if you achieve 85% line coverage, you will earn 8.5 out of
-10 points.
+For example, if you achieve 85% line coverage for both classes, you will earn 
+8.5 out of 10 points.

@@ -48,5 +48,4 @@ public class IListOfStringTest {
         assertEquals("two", list3.get(1));
         assertEquals("three", list3.get(0));
     }
-
 }

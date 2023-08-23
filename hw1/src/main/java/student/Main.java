@@ -1,77 +1,61 @@
 package student;
 
-import com.github.javaparser.ast.expr.*;
-import com.github.javaparser.ast.stmt.ForEachStmt;
 import com.spertus.jacquard.checkstylegrader.CheckstyleGrader;
 import com.spertus.jacquard.common.*;
-import com.spertus.jacquard.junittester.JUnitTester;
+import com.spertus.jacquard.coverage.*;
 import com.spertus.jacquard.pmdgrader.PmdGrader;
 import com.spertus.jacquard.publisher.GradescopePublisher;
-import com.spertus.jacquard.syntaxgrader.SyntaxConditionGrader;
 
 import java.util.*;
 
 import static java.lang.System.exit;
 
 public class Main {
+    private static final String MAIN_DIR = "src/main/java/student/";
+    private static final String EMPTY_FILE = "EmptyListOfString.java";
+    private static final String NON_EMPTY_FILE = "NonEmptyListOfString.java";
+    private static final String TEST_FILE = "IListOfStringTest.java";
+
+    // Divide assignments of ten points between the two implementation classes.
+    private static final double EMPTY_POINTS = 2.0; // EmptyListOfString.java
+    private static final double NON_EMPTY_POINTS = 8.0; // NonEmptyListOfString.java
+
     public static void main(String[] args) {
         Autograder.init();
 
-        // For this assignment, students upload only a single file.
-        final Target target = Target.fromPathString("src/main/java/student/FavoritesIterator.java");
+        final Target emptyLosTarget = Target.fromPathString(MAIN_DIR + EMPTY_FILE);
+        final Target nonEmptyLosTarget = Target.fromPathString(MAIN_DIR + NON_EMPTY_FILE);
+        final Target testTarget = Target.fromPathString(MAIN_DIR + TEST_FILE);
 
-        // Create checkstyle grader.
+        // Create and run checkstyle graders on implementation files.
         CheckstyleGrader checkstyleGrader = new CheckstyleGrader(
                 "config/checkstyle-rules.xml",
                 1.0,
-                5.0);
+                10.0);
+        List<Result> results = checkstyleGrader.grade(emptyLosTarget, nonEmptyLosTarget);
 
-        // Create PMD grader.
+        // Create and run PMD grader on all targets, including tests.
         PmdGrader pmdGrader = PmdGrader.createFromRules(
                 1.0,
-                5.0,
-                "category/java/bestpractices.xml",
-                "MissingOverride");
-
-        // Create grader to make sure students did not use enhanced for-loops.
-        SyntaxConditionGrader forGrader = new SyntaxConditionGrader(
-                0,
-                "enhanced for-loop",
                 10.0,
-                node -> (node instanceof ForEachStmt)
-        );
+                "category/java/bestpractices.xml");
+        results.addAll(pmdGrader.grade(testTarget));
 
-        // Create grader to make sure students did not call the hasNext()
-        // or next() methods of other classes.
-        final List<String> methodNames = List.of("hasNext", "next");
-        SyntaxConditionGrader nextGrader = new SyntaxConditionGrader(
-                0,
-                "iterator method calls",
-                20.0,
-                node -> {
-                    // Check if method call is to next() or hasNext().
-                    if (node instanceof MethodCallExpr methodCallExpr &&
-                            methodNames.contains(methodCallExpr.getNameAsString())) {
-                        // If so, flag if scope is explicit and not "this".
-                        return methodCallExpr.getScope().isPresent() &&
-                                !(methodCallExpr.getScope().get() instanceof ThisExpr);
-                    }
-                    return false;
-                });
+        // Measure code coverage on EmptyListOfString.
+        CodeCoverageTester emptyCodeCoverageTester =
+                new CodeCoverageTester(
+                        new LinearLineScorer(EMPTY_POINTS),
+                        EmptyListOfString.class,
+                        IListOfStringTest.class);
+        results.addAll(emptyCodeCoverageTester.run());
 
-        // Run all graders, collecting results.
-        List<Result> results = Grader.gradeAll(
-                target,
-                checkstyleGrader, pmdGrader, forGrader, nextGrader);
-
-        // Run unit tests, adding on to existing results.
-        JUnitTester runner = new JUnitTester(
-                // 40 points
-                HiddenFavoritesIteratorTest.class,
-                // 20 points
-                ProvidedFavoritesIteratorTest.class);
-        List<Result> junitResults = runner.run();
-        results.addAll(junitResults);
+        // Measure code coverage on NonEmptyListOfString.
+        CodeCoverageTester nonEmptyCodeCoverageTester =
+                new CodeCoverageTester(
+                        new LinearLineScorer(NON_EMPTY_POINTS),
+                        NonEmptyListOfString.class,
+                        IListOfStringTest.class);
+        results.addAll(nonEmptyCodeCoverageTester.run());
 
         // Display the results.
         new GradescopePublisher().displayResults(results);

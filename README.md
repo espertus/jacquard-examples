@@ -26,6 +26,7 @@ or select individual videos:
    (0:52)
 9. [Uploading and testing autograder](https://northeastern.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=9742091c-558a-46be-8cb4-b06001565d99)
    (2:14)
+10. [Refreshing the Jacquard library](https://northeastern.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=8578e267-2bf0-4849-94c0-b066015c1ee3) (0:24)
 
 ## Examples
 
@@ -37,6 +38,15 @@ features:
 * PMD tests
 * Parser-based tests (ensuring that language features are used as required)
 * JUnit tests
+
+## FAQ
+
+### How do I make sure I have the latest version of the Jacquard library?
+
+See [Refreshing the Jacquard library](https://northeastern.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=8578e267-2bf0-4849-94c0-b066015c1ee3) or follow these steps in IntelliJ:
+1. Click on `Gradle` in the right sidebar.
+2. Right-click (or control-click) on the project name.
+3. Select `Refresh Gradle Dependencies`.
 
 ## Support
 

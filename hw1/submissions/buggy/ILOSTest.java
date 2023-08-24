@@ -1,5 +1,3 @@
-// This is a placeholder for student code.
-
 package student;
 
 import org.junit.jupiter.api.*;

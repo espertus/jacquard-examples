@@ -1,6 +1,4 @@
-package correct;
-
-import student.ILOS; // must be imported from original package
+package student;
 
 /**
  * An immutable empty list of Strings.

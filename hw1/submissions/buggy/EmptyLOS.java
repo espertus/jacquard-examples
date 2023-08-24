@@ -1,6 +1,4 @@
-package buggy;
-
-import student.ILOS;
+package student;
 
 /**
  * An immutable empty list of Strings.

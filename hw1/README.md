@@ -138,8 +138,8 @@ Grading will be based on:
 * PMD with [java/best_practices.xml](https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html) [10 points]
 * Unit testing
   * Your implementation passes your tests [20 points]
-  * Our hidden correct implementation passes your tests [10 points]
-  * Our hidden buggy implementations fail your tests [20 points]
+  * Our hidden correct implementation passes your tests [15 points]
+  * Our hidden buggy implementations fail your tests [15 points]
   * Your implementation passes our hidden tests [20 points]
 * Code coverage [10 points]
   * `EmptyListOfString` [2 points]

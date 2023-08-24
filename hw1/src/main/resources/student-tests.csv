@@ -1,0 +1,3 @@
+, student.EmptyLOS, student.NonEmptyLOS, correct.EmptyLOS, correct.NonEmptyLOS, buggy.EmptyLOS, buggy.NonEmptyLOS
+size, 2.0, 8.0, 2.0, 5.0, -2.0, -5.0
+concat, 2.0, 8.0, 2.0, 8.0, -2.0, -5.0

@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-./run_autograder.py
+./run_autograder.py "$1"

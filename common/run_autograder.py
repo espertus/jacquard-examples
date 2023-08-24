@@ -6,9 +6,11 @@ import os
 import platform
 import shutil
 import subprocess
+import sys
 
 # Configuration file
-CONFIG_PATH = "../quiz1/config.ini"
+CONFIG_FILE_NAME = "config.ini"
+CONFIG_PATH_LOCAL_TEMPLATE = "../%s/" + CONFIG_FILE_NAME
 CONFIG_SUBMISSION_SECTION_NAME = "submission"
 CONFIG_SECTIONS = [CONFIG_SUBMISSION_SECTION_NAME]
 CONFIG_PACKAGE_KEY = "package"
@@ -93,19 +95,20 @@ def read_config_file() -> (str, list[str]):
 
     # Make sure config file has required section and keys.
     config = configparser.ConfigParser()
-    if not config.read(CONFIG_PATH):
+    path = CONFIG_PATH_LOCAL_TEMPLATE % sys.argv[1] if is_local() else CONFIG_FILE_NAME
+    if not config.read(path):
         raise Exception(
-            f"Unable to read configuration file {CONFIG_PATH}"
+            f"Unable to read configuration file {path}"
         )
     if CONFIG_SUBMISSION_SECTION_NAME not in config.sections():
         raise Exception(
-            f"Did not find section '{CONFIG_SUBMISSION_SECTION_NAME}' in {CONFIG_PATH}"
+            f"Did not find section '{CONFIG_SUBMISSION_SECTION_NAME}' in {path}"
         )
     if len(config.sections()) > len(CONFIG_SECTIONS):
         sections = config.sections()
         sections.remove(CONFIG_SUBMISSION_SECTION_NAME)
         raise Exception(
-            f"Unexpected section(s) in {CONFIG_PATH}: {sections}"
+            f"Unexpected section(s) in {path}: {sections}"
         )
     section = config[CONFIG_SUBMISSION_SECTION_NAME]
     for key in CONFIG_KEYS:
@@ -118,7 +121,7 @@ def read_config_file() -> (str, list[str]):
         for key in CONFIG_KEYS:
             keys.remove(key)
         raise Exception(
-            f"Unexpected key(s) in {CONFIG_PATH}: {keys}"
+            f"Unexpected key(s) in {path}: {keys}"
         )
 
     # Extract configuration values.
@@ -126,7 +129,7 @@ def read_config_file() -> (str, list[str]):
     files = section[CONFIG_FILES_KEY]
     if len(files) < 2 or files[0] != '[' or files[-1] != ']':
         raise Exception(
-            f"Could not parse {CONFIG_FILES_KEY} value '{files}' in section '{CONFIG_SUBMISSION_SECTION_NAME}' of {CONFIG_PATH}")
+            f"Could not parse {CONFIG_FILES_KEY} value '{files}' in section '{CONFIG_SUBMISSION_SECTION_NAME}' of {path}")
     files_list = [file.strip() for file in files[1:-1].split(',')]
     return (package, files_list)
 
@@ -188,6 +191,9 @@ def output_error(e):
 
 
 def main():
+    if is_local() and len(sys.argv) != 2:
+        print("Usage: run_autogrder.py <projectdir>")
+        sys.exit(1)
     try:
         init()
         run()

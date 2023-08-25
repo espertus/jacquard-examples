@@ -1,14 +1,25 @@
-# Jacquard Quiz 1 Example
+# Jacquard Homework 1 Example
 
 This is an example of a [Jacquard](https://github.com/espertus/jacquard)
-autograder for a quiz. See the [parent directory](../README.md) for a
-video overview and instructions.
+autograder for a homework assignment. It demonstrates the use of:
+
+* Checkstyle
+* PMD
+* Unit tests
+* Code coverage
+* Cross-testing, i.e., running student tests against
+    * student code
+    * correct code
+    * buggy code
 
 ## Teacher Instructions
 
+We recommend walking through the [Quiz 1 example](../quiz1) and the top-level
+videos before trying out this example.
+
 ### Software Requirements
 
-* Gradle 8.0 or higher
+* Gradle
 * Python 3 if you want to test locally by executing `test_autograder.py`
   (optional)
 * bash (included on OS X and Linux)
@@ -23,10 +34,15 @@ These directories and files have code specific to the assignment:
 * `config/checkstyle-rules.xml` holds the checkstyle rules file
 * `src/main/java/student` contains
     * `Main.java`, which has the `main` method that controls the autograder
-    * `FavoritesIterator.java`, placeholder for student code for testing
-      the autograder locally
-    * `HiddenFavoriteIteratorsTest.java` and `ProvidedFavoritesIteratorTest`,
-      which contain JUnit 5 tests of student code
+    * `ILOS.java`, which provides a "list of string" interface
+    * `EmptyLOS.java` and `NonEmptyLOS.java`, placeholders for the student
+      implementations of the interface
+    * `ILOSTest.java`, a placeholder for student tests
+    * `HiddenILOSTest.java`, which contain hidden JUnit 5 tests of student code
+* `src/main/java/buggy` contains a deliberately buggy implementation of the
+  required code, on which student tests should report errors
+* `src/main/java/correct` contains a correct implementation of the required
+  code, on which student tests should not report errors
 * `submission` holds a sample submission (required if you want to run
   `test_autograder.py` locally)
 * `submissions` (which is not required) holds sample submissions to manually
@@ -36,16 +52,27 @@ Any of the above files could have different names or packages.
 
 #### config.ini
 
-The submission package and files are specified in `config.ini` and should be
-edited if you change the package name or required files. Currently, package
-names must have only a single part (e.g., "student", not "edu.myschool.student").
+The submission package and files are specified in the `[submission]` section of
+`config.ini` and should be edited if you change the package name or required
+files. Currently, package names must have only a single part (e.g., "student",
+not "edu.myschool.student").
 
 ```
 [submission]
 package = student
-files = [FavoritesIterator.java]
+files = [EmptyLOS.java, NonEmptyLOS.java, ILOSTest.java]
+
+[crosstests]
+tests = [ILOSTest.java]
+packages = [correct, buggy]
 ```
-The list of files is comma-separated, with optional whitespace.
+
+The `[crosstests]` sections indicates that the test `ILOSTest.java` in the
+primary (`student`) package should also run on the instructor-provided
+implements in the `correct` and `buggy` packages.
+
+**The remainder of the Teacher Instructions are the same as
+for [Quiz 1](../quiz1).**
 
 #### build.gradle
 
@@ -102,49 +129,51 @@ You are provided with an interface `IListOfString` and need to complete and
 test the concrete classes `EmptyListOfString` and `NonEmptyListOfString`.
 
 Specifically, you need to implement and test the methods:
-* `boolean allStartWith(char startLetter)`
-* `boolean isAlphabeticallyConsecutive()`
-The methods are described in the javadoc.
+
+* `int size()`
+* `String concat()`
+  The methods are described in the javadoc.
 
 ### Tests
 
 You are encouraged to practice test-driven development (TDD) and write
 your tests before implementing the methods under test. To earn credit,
 your tests must:
-* be in `IListOfStringTest.java`
+
+* be in `ILOSTest.java`
 * have the `@Test` annotation
 * have the `public` visibility modifier
-* start with the name of the method under test (such as `isAlphabeticallyConsecutiveWorksForLowercase`)
-Use the existing tests as a model.
+* start with the name of the method under test (such
+  as `sizeWorksForLength0`)
+  Use the existing tests as a model.
 
 You should modify and submit these files:
-* `IListOfString.java`
-* `EmptyListOfString.java`
-* `NonEmptyListOfString.java`
+
+* `ILOSTest.java`
+* `EmptyLOS.java`
+* `NonEmptyLOS.java`
 
 All of your tests must be annotated with `@Test` and have names that start
 with the name of the method being tested, with the exact same capitalization.**
-Use the provided tests as a model for names.
+Use the provided test as a model for names.
 
-### Implementation
+### Grading
 
-Replace the stubs of `allStartWith()` and `isAlphabeticallyConsecutive()`
-in `EmptyListOfString.java` and `NonEmptyListOfString.java` with implementations.
-
-
-### Grading 
 Grading will be based on:
-* checkstyle with configuration file [config/checkstyle-rules.xml](config/checkstyle-rules.xml) [10 points]
-* PMD with [java/best_practices.xml](https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html) [10 points]
+
+* checkstyle with configuration
+  file [config/checkstyle-rules.xml](config/checkstyle-rules.xml) [10 points]
+* PMD
+  with [java/best_practices.xml](https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html) [10 points]
 * Unit testing
-  * Your implementation passes your tests [20 points]
-  * Our hidden correct implementation passes your tests [15 points]
-  * Our hidden buggy implementations fail your tests [15 points]
-  * Your implementation passes our hidden tests [20 points]
+    * Your implementation passes your tests [20 points]
+    * Our hidden correct implementation passes your tests [15 points]
+    * Our hidden buggy implementations fail your tests [15 points]
+    * Your implementation passes our hidden tests [20 points]
 * Code coverage [10 points]
-  * `EmptyListOfString` [2 points]
-  * `NonEmptyListOfString` [8 points]
+    * `EmptyLOS` [2 points]
+    * `NonEmptyLOS` [8 points]
 
 Your code coverage score will be proportional to your line coverage.
-For example, if you achieve 85% line coverage for both classes, you will earn 
+For example, if you achieve 85% line coverage for both classes, you will earn
 8.5 out of 10 points.

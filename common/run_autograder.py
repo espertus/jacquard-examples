@@ -12,10 +12,13 @@ import sys
 CONFIG_FILE_NAME = "config.ini"
 CONFIG_PATH_LOCAL_TEMPLATE = "../%s/" + CONFIG_FILE_NAME
 CONFIG_SUBMISSION_SECTION_NAME = "submission"
-CONFIG_SECTIONS = [CONFIG_SUBMISSION_SECTION_NAME]
+CONFIG_CROSSTESTS_SECTION_NAME = "crosstests"
+CONFIG_SECTIONS = [CONFIG_SUBMISSION_SECTION_NAME, CONFIG_CROSSTESTS_SECTION_NAME]
 CONFIG_PACKAGE_KEY = "package"
 CONFIG_FILES_KEY = "files"
-CONFIG_KEYS = [CONFIG_PACKAGE_KEY, CONFIG_FILES_KEY]
+CONFIG_SUBMISSION_KEYS = [CONFIG_PACKAGE_KEY, CONFIG_FILES_KEY]
+CONFIG_TESTS_KEY = "tests"
+CONFIG_PACKAGES_KEY = "packages"
 
 # All directories are relative. On the server, they are relative to /autograder.
 SUBMISSION_SUBDIR = "submission" + os.sep
@@ -41,14 +44,15 @@ def is_local():
     return not os.getcwd().startswith("/autograder")
 
 
-def init():
+def init(config):
     """Initialize the environment before compilation can be done."""
     if not is_local():
         os.makedirs(GRADESCOPE_RESULTS_SUBDIR, exist_ok=True)
 
     create_working_dir()
     copy_source_files()
-    copy_req_files()
+    copy_req_files(config)
+    repackage(config)
 
 
 def create_working_dir():
@@ -87,60 +91,13 @@ def ensure_file_in_package(file_path: str, package: str):
         f"File {file_path} does not contain the expected package declaration: {pkg_stmt}")
 
 
-def read_config_file() -> (str, list[str]):
-    """Read the submission package and filenames from config file
-
-    :raise Exception: if the config file cannot be found or has invalid content
-    """
-
-    # Make sure config file has required section and keys.
-    config = configparser.ConfigParser()
-    path = CONFIG_PATH_LOCAL_TEMPLATE % sys.argv[1] if is_local() else CONFIG_FILE_NAME
-    if not config.read(path):
-        raise Exception(
-            f"Unable to read configuration file {path}"
-        )
-    if CONFIG_SUBMISSION_SECTION_NAME not in config.sections():
-        raise Exception(
-            f"Did not find section '{CONFIG_SUBMISSION_SECTION_NAME}' in {path}"
-        )
-    if len(config.sections()) > len(CONFIG_SECTIONS):
-        sections = config.sections()
-        sections.remove(CONFIG_SUBMISSION_SECTION_NAME)
-        raise Exception(
-            f"Unexpected section(s) in {path}: {sections}"
-        )
-    section = config[CONFIG_SUBMISSION_SECTION_NAME]
-    for key in CONFIG_KEYS:
-        if key not in section:
-            raise Exception(
-                f"Did not find key '{key}' in section '{CONFIG_SUBMISSION_SECTION_NAME}' of {CONFIG_PATH}"
-            )
-    if len(section) > len(CONFIG_KEYS):
-        keys = list(section.keys())
-        for key in CONFIG_KEYS:
-            keys.remove(key)
-        raise Exception(
-            f"Unexpected key(s) in {path}: {keys}"
-        )
-
-    # Extract configuration values.
-    package = section[CONFIG_PACKAGE_KEY]
-    files = section[CONFIG_FILES_KEY]
-    if len(files) < 2 or files[0] != '[' or files[-1] != ']':
-        raise Exception(
-            f"Could not parse {CONFIG_FILES_KEY} value '{files}' in section '{CONFIG_SUBMISSION_SECTION_NAME}' of {path}")
-    files_list = [file.strip() for file in files[1:-1].split(',')]
-    return (package, files_list)
-
-
-def copy_req_files():
+def copy_req_files(config):
     """Copy student-provided files into the appropriate server directory.
 
     :raise Exception: if a required file is not found
 
     """
-    package, files = read_config_file()
+    package, files = get_submission_info(config)
     path = package_to_path(package)
     dest_path = WORKING_JAVA_SUBDIR + path
     os.makedirs(dest_path, exist_ok=True)
@@ -153,6 +110,35 @@ def copy_req_files():
             shutil.copy(file_path, dest_path)
         else:
             raise Exception(f"File {file_path} not found.")
+
+
+def repackage(config):
+    """Repackage test files for cross-testing"""
+
+    # Only run if there is a crosstests section in config.
+    if CONFIG_CROSSTESTS_SECTION_NAME not in config.sections():
+        return
+
+    # Get values from configuration files.
+    old_package = config[CONFIG_SUBMISSION_SECTION_NAME][CONFIG_PACKAGE_KEY]
+    section = config[CONFIG_CROSSTESTS_SECTION_NAME]
+    tests = get_config_list(section, CONFIG_TESTS_KEY)
+    packages = get_config_list(section, CONFIG_PACKAGES_KEY)
+
+    # Repackage all the test files in all the packages.
+    for filename in tests:
+        source = os.path.join(WORKING_JAVA_SUBDIR, old_package, filename)
+        for new_package in packages:
+            target = os.path.join(WORKING_JAVA_SUBDIR, new_package, filename)
+
+            with open(target, 'w') as target_file:
+                target_file.write(f"package {new_package};\n\n")
+                target_file.write(f"import {old_package}.*;\n")
+
+                with open(source, 'r') as source_file:
+                    for line in source_file:
+                        if f"package {old_package}" not in line:
+                            target_file.write(line)
 
 
 def run():
@@ -190,12 +176,79 @@ def output_error(e):
     output(json.dumps(data))
 
 
+def read_config_file():
+    """Read and validate the configuration file.
+
+    :raise Exception: if the config file cannot be found or has invalid content
+    """
+
+    # Make sure config file has required section and keys.
+    config = configparser.ConfigParser()
+    path = CONFIG_PATH_LOCAL_TEMPLATE % sys.argv[1] if is_local() else CONFIG_FILE_NAME
+    if not config.read(path):
+        raise Exception(
+            f"Unable to read configuration file {path}"
+        )
+    if CONFIG_SUBMISSION_SECTION_NAME not in config.sections():
+        raise Exception(
+            f"Did not find section '{CONFIG_SUBMISSION_SECTION_NAME}' in {path}"
+        )
+    if len(config.sections()) > len(CONFIG_SECTIONS):
+        sections = config.sections()
+        sections.remove(CONFIG_SUBMISSION_SECTION_NAME)
+        raise Exception(
+            f"Unexpected section(s) in {path}: {sections}"
+        )
+    section = config[CONFIG_SUBMISSION_SECTION_NAME]
+    for key in CONFIG_SUBMISSION_KEYS:
+        if key not in section:
+            raise Exception(
+                f"Did not find key '{key}' in section '{CONFIG_SUBMISSION_SECTION_NAME}' of {CONFIG_PATH}"
+            )
+    if len(section) > len(CONFIG_SUBMISSION_KEYS):
+        keys = list(section.keys())
+        for key in CONFIG_SUBMISSION_KEYS:
+            keys.remove(key)
+        raise Exception(
+            f"Unexpected key(s) in {path}: {keys}"
+        )
+
+    return config
+
+
+def get_config_list(section, key: str) -> list[str]:
+    """Get a list from the configuration file.
+
+    :raise Exception: if the key does not appear or its value is unparseable
+    """
+    if key not in section:
+        raise Exception(
+            f"Could not find key {key} in '{CONFIG_FILE_NAME}'")
+    list = section[key]
+    if len(list) < 2 or list[0] != '[' or list[-1] != ']':
+        raise Exception(
+            f"Could not parse {key} value '{list}' in  '{CONFIG_FILE_NAME}'")
+    return [item.strip() for item in list[1:-1].split(',')]
+
+
+def get_submission_info(config) -> (str, list[str]):
+    """Get the name of the package and files of the submission.
+
+    :raise Exception: if the file list cannot be parsed
+    """
+    section = config[CONFIG_SUBMISSION_SECTION_NAME]
+    package = section[CONFIG_PACKAGE_KEY]
+    files_list = get_config_list(section, CONFIG_FILES_KEY)
+    return (package, files_list)
+
+
 def main():
     if is_local() and len(sys.argv) != 2:
-        print("Usage: run_autogrder.py <projectdir>")
+        print("Usage: run_autograder.py <projectdir>")
         sys.exit(1)
     try:
-        init()
+        config = read_config_file()
+        init(config)
         run()
     except Exception as e:
         output_error(e)

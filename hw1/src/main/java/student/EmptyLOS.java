@@ -1,3 +1,5 @@
+// This is a placeholder for student code.
+
 package student;
 
 /**

@@ -7,13 +7,14 @@ import com.spertus.jacquard.crosstester.CrossTester;
 import com.spertus.jacquard.junittester.JUnitTester;
 import com.spertus.jacquard.pmdgrader.PmdGrader;
 import com.spertus.jacquard.publisher.GradescopePublisher;
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.*;
 
 import static java.lang.System.exit;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException {
         Autograder.init();
 
         final Target emptyLosTarget = Target.fromClass(EmptyLOS.class);

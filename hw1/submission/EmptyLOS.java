@@ -1,6 +1,6 @@
-package student;
+// This is a placeholder for student code.
 
-import student.ILOS;
+package student;
 
 /**
  * An immutable empty list of Strings.
@@ -14,11 +14,12 @@ public class EmptyLOS implements ILOS {
 
     @Override
     public int size() {
-        return Integer.MIN_VALUE; // intentional bug
+        return 0;
     }
 
     @Override
     public String concat() {
-        return null; // intentional bug
+        // for students to implement
+        return "";
     }
 }

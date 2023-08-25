@@ -1,3 +1,5 @@
+// This is a placeholder for student code.
+
 package student;
 
 /**
@@ -14,11 +16,11 @@ public class NonEmptyLOS implements ILOS {
 
     @Override
     public int size() {
-        return 0; // for students to implement
+        return 1 + rest.size();
     }
 
     @Override
     public String concat() {
-        return ""; // for students to implement
+        return first + rest.concat();
     }
 }

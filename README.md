@@ -43,7 +43,7 @@ There are two examples, both from a CS 2 data structures course. Quiz 1 should b
 * Parser-based tests (ensuring that language features are used as required)
 * JUnit tests
 
-[Homework 1](homework1/README.md) requires students to complete the implementation
+[Homework 1](hw1/README.md) requires students to complete the implementation
 of two classes and write unit tests. It demonstrates these features:
 
 * Checkstyle tests

@@ -30,8 +30,7 @@ or select individual videos:
    (0:52)
 9. [Uploading and testing autograder](https://northeastern.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=9742091c-558a-46be-8cb4-b06001565d99)
    (2:14)
-10. [Refreshing the Jacquard library](https://northeastern.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=8578e267-2bf0-4849-94c0-b066015c1ee3) (
-    0:24)
+10. [Refreshing the Jacquard library](https://northeastern.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=8578e267-2bf0-4849-94c0-b066015c1ee3) (0:24)
 
 ## Examples
 
@@ -113,6 +112,30 @@ has two static factory methods:
 * [`createFromRules()`]((https://ellenspertus.com/jacquard/com/spertus/jacquard/pmdgrader/PmdGrader.html#createFromRules(double,double,java.lang.String,java.lang.String...))), which lets you specify one ruleset and one or more rules from that ruleset [used in [hw1](hw1/Main.java)]
 
 There are PMD plugins for [IntelliJ](https://plugins.jetbrains.com/plugin/1137-pmd) and [Eclipse](https://marketplace.eclipse.org/category/free-tagging/pmd).
+
+### How is code coverage measured?
+
+Code coverage is measured using [JaCoCo](https://www.jacoco.org/jacoco/index.html). We recommend
+having students run JaCoCo inside IntelliJ or Eclipse, because the plugins show which lines of
+code are exercised by the tests.
+
+When creating a [`CodeCoverageTester`](https://ellenspertus.com/jacquard/com/spertus/jacquard/coverage/CodeCoverageTester.html),
+a [`Scorer`](https://ellenspertus.com/jacquard/com/spertus/jacquard/coverage/Scorer.html) must be
+provided to convert the line and branch coverage percentages into points. The concrete scorers are 
+provided:
+* [`LinearScorer`](https://ellenspertus.com/jacquard/com/spertus/jacquard/coverage/LinearScorer.html),
+  which uses a linear function of the line and branch coverage percentages
+* [`LinearBranchScorer`](https://ellenspertus.com/jacquard/com/spertus/jacquard/coverage/LinearBranchScorer.html),
+  which uses a linear function of the branch coverage percentage (ignoring line coverage)
+* [`LinearLineScorer`](https://ellenspertus.com/jacquard/com/spertus/jacquard/coverage/LinearLineScorer.html),
+  which uses a linear function of the line coverage percentage (ignoring branch coverage)
+If you want to write your own scorer, we suggest viewing [`LinearScorer.java`](https://github.com/espertus/jacquard/blob/main/src/main/java/com/spertus/jacquard/coverage/LinearScorer.java).
+
+### Why was the name "Jacquard" used?
+
+The CSV files used for cross-testing made me think of looms, such as the [looms created by
+Joseph Marie Jacquard](https://en.wikipedia.org/wiki/Jacquard_machine), which were
+controlled by punched cards so play an important role in computing history.
 
 ## Support
 

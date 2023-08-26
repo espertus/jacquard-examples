@@ -135,7 +135,8 @@ If you want to write your own scorer, we suggest viewing [`LinearScorer.java`](h
 
 The CSV files used for cross-testing made me think of looms, such as the [looms created by
 Joseph Marie Jacquard](https://en.wikipedia.org/wiki/Jacquard_machine), which were
-controlled by punched cards so play an important role in computing history.
+controlled by punched cards so play an important role in computing history. Also, the
+starting letters correspond to Java or Java Autograder.
 
 ## Support
 

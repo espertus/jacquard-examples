@@ -57,6 +57,9 @@ of two classes and write unit tests. It demonstrates these features:
      * a hidden buggy implementation
 
 ## FAQ
+* [How do I make sure I have the latest version of the Jacquard library?](https://github.com/espertus/jacquard-examples/blob/main/README.md#how-do-i-make-sure-i-have-the-latest-version-of-the-jacquard-library)
+* [How do I use Checkstyle?](https://github.com/espertus/jacquard-examples/blob/main/README.md#how-do-i-use-checkstyle)
+* [What's PMD? How do I use it?](https://github.com/espertus/jacquard-examples/blob/main/README.md#whats-pmd-how-do-i-use-it)
 
 ### How do I make sure I have the latest version of the Jacquard library?
 

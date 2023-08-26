@@ -111,6 +111,8 @@ Autograder.Builder.getInstance()
     .build();
 ```
 
+See also the [Autograder configuration chapter](https://northeastern.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=ba36573d-dd4a-493d-8b3d-b06a0181c9ff&start=15) (0:15-2:06) from [Taking a first look at Homework 1](https://northeastern.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=ba36573d-dd4a-493d-8b3d-b06a0181c9ff).
+
 ### How do I use Checkstyle?
 
 See the [Checkstyle website](https://checkstyle.sourceforge.io/),
@@ -149,7 +151,7 @@ Jacquard's [PMDGrader](https://ellenspertus.com/jacquard/com/spertus/jacquard/pm
 has two static factory methods:
 * [`createFromRuleSetPaths()`](https://ellenspertus.com/jacquard/com/spertus/jacquard/pmdgrader/PmdGrader.html#createFromRuleSetPaths(double,double,java.lang.String...)), 
   which lets you specify one or more rulesets to be used in their entirety [used in [quiz1](hw1/Main.java)]
-* [`createFromRules()`]((https://ellenspertus.com/jacquard/com/spertus/jacquard/pmdgrader/PmdGrader.html#createFromRules(double,double,java.lang.String,java.lang.String...))), which lets you specify one ruleset and one or more rules from that ruleset [used in [hw1](hw1/Main.java)]
+* [`createFromRules()`](https://ellenspertus.com/jacquard/com/spertus/jacquard/pmdgrader/PmdGrader.html#createFromRules(double,double,java.lang.String,java.lang.String...))), which lets you specify one ruleset and one or more rules from that ruleset [used in [hw1](hw1/Main.java)]
 
 There are PMD plugins for [IntelliJ](https://plugins.jetbrains.com/plugin/1137-pmd) and [Eclipse](https://marketplace.eclipse.org/category/free-tagging/pmd).
 
@@ -238,6 +240,8 @@ can be set to any other visibility. Here is an example from [Quiz 1](https://git
         assertThrows(NoSuchElementException.class, () -> iterator.next());
     }
 ```
+
+See also the [JUnitTester chapter](https://northeastern.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=ba36573d-dd4a-493d-8b3d-b06a0181c9ff&start=378) (6:18-8:07) from [Taking a first look at Homework 1](https://northeastern.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=ba36573d-dd4a-493d-8b3d-b06a0181c9ff).
 
 #### Other results
 The visibility level can be set for all other types of autograder results through the 

@@ -7,7 +7,6 @@ import com.spertus.jacquard.crosstester.CrossTester;
 import com.spertus.jacquard.junittester.JUnitTester;
 import com.spertus.jacquard.pmdgrader.PmdGrader;
 import com.spertus.jacquard.publisher.GradescopePublisher;
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.*;
 
@@ -15,11 +14,22 @@ import static java.lang.System.exit;
 
 public class Main {
     public static void main(String[] args) throws ClassNotFoundException {
-        Autograder.init();
+        // Change default configuration.
+        //Autograder.init();
+        Autograder.Builder.getInstance()
+                // Tests should timeout after 5,000 ms (5 sec), not 10,000 ms.
+                .timeout(5000L)
+                // Parse student code as Java 11, not 17.
+                .javaLevel(11)
+                // Hide test results until the due date.
+                .visibility(Visibility.AFTER_DUE_DATE)
+                .build();
 
         final Target emptyLosTarget = Target.fromClass(EmptyLOS.class);
         final Target nonEmptyLosTarget = Target.fromClass(NonEmptyLOS.class);
         final Target testTarget = Target.fromClass(ILOSTest.class);
+        final List<Target> allTargets =
+                List.of(emptyLosTarget, nonEmptyLosTarget, testTarget);
 
         // Create and run checkstyle graders on implementation files (10 points).
         CheckstyleGrader checkstyleGrader = new CheckstyleGrader(
@@ -32,14 +42,14 @@ public class Main {
         List<Result> results = checkstyleGrader.grade(emptyLosTarget, nonEmptyLosTarget);
 
         // Create and run PMD grader on all targets, including tests (10 points).
+        // Make the results immediately visible.
         PmdGrader pmdGrader = PmdGrader.createFromRules(
                 1.0,
                 10.0,
                 "category/java/bestpractices.xml");
-        // As with checkstyle, calling this once gives a maximum score of 10,
-        // not 30. For a maximum score of 30, call it 3 times, each with one
-        // target.
-        results.addAll(pmdGrader.grade(List.of(emptyLosTarget, nonEmptyLosTarget, testTarget)));
+        List<Result> pmdResults = pmdGrader.grade(allTargets);
+        Result.changeVisibility(pmdResults, Visibility.VISIBLE);
+        results.addAll(pmdResults);
 
         // Measure code coverage on EmptyLOS (2 points).
         // The score will be P * 2.0, where P is the percent of lines covered by
@@ -60,6 +70,7 @@ public class Main {
         results.addAll(nonEmptyCodeCoverageTester.run());
 
         // Run hidden tests on student code (20 points).
+        // Visibility is specified through the @GradedTest annotation.
         JUnitTester studentCodeTester = new JUnitTester(HiddenILOSTest.class);
         results.addAll(studentCodeTester.run());
 

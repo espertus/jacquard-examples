@@ -12,23 +12,13 @@ autograder for a homework assignment. It demonstrates the use of:
     * correct code
     * buggy code
  
-This is more advanced and less thoroughly documented than [Homework 1](../hw1/README.md), which you should
+This is more advanced and less thoroughly documented than [Quiz 1](../quiz1/README.md), which you should
 view first.
 
 ## Teacher Instructions
 
-We recommend walking through the [Quiz 1 example](../quiz1) and the top-level
+We recommend walking through the [Quiz 1 example](../quiz1/README.md) and the top-level
 videos before trying out this example.
-
-### Software Requirements
-
-* Gradle
-* Python 3 if you want to test locally by executing `test_autograder.py`
-  (optional)
-* bash (included on OS X and Linux)
-
-For bash on Windows, we use and
-recommend [Git for Windows](https://gitforwindows.org/) 2.41 or higher.
 
 ### Videos
 

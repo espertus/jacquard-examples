@@ -11,21 +11,20 @@ autograder for a homework assignment. It demonstrates the use of:
     * student code
     * correct code
     * buggy code
+ 
+This is more advanced and less thoroughly documented than [Quiz 1](../quiz1/README.md), which you should
+view first.
 
 ## Teacher Instructions
 
-We recommend walking through the [Quiz 1 example](../quiz1) and the top-level
+We recommend walking through the [Quiz 1 example](../quiz1/README.md) and the top-level
 videos before trying out this example.
 
-### Software Requirements
+### Videos
 
-* Gradle
-* Python 3 if you want to test locally by executing `test_autograder.py`
-  (optional)
-* bash (included on OS X and Linux)
-
-For bash on Windows, we use and
-recommend [Git for Windows](https://gitforwindows.org/) 2.41 or higher.
+1. [Opening Homework 1](https://northeastern.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=b6ecb9d2-9a9b-4485-b394-b06a01300872) [0:21]
+2. [Taking a first look at Homework 1](https://northeastern.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=0e4e8f69-4d69-4d3e-8d52-b0690135131c) [3:26]
+3. [Cross-testing in Homework 1](https://northeastern.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=165ca9fa-98eb-4f0f-8841-b069013430c5) [3:15]
 
 ### Files
 
@@ -43,6 +42,7 @@ These directories and files have code specific to the assignment:
   required code, on which student tests should report errors
 * `src/main/java/correct` contains a correct implementation of the required
   code, on which student tests should not report errors
+* `src/main/resources/student-tests.csv` contains a CSV file for [cross-testing](https://github.com/espertus/jacquard-examples/blob/main/README.md#what-is-cross-testing)
 * `submission` holds a sample submission (required if you want to run
   `test_autograder.py` locally)
 * `submissions` (which is not required) holds sample submissions to manually
@@ -69,7 +69,8 @@ packages = [correct, buggy]
 
 The `[crosstests]` sections indicates that the test `ILOSTest.java` in the
 primary (`student`) package should also run on the instructor-provided
-implements in the `correct` and `buggy` packages.
+implements in the `correct` and `buggy` packages. For more information, see
+[What is cross-testing?](https://github.com/espertus/jacquard-examples/blob/main/README.md#what-is-cross-testing).
 
 **The remainder of the Teacher Instructions are the same as
 for [Quiz 1](../quiz1).**

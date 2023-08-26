@@ -35,14 +35,26 @@ or select individual videos:
 
 ## Examples
 
-Right now, there is a single example, [Quiz 1](quiz1/README.md), which shows an
-autograder for a quiz in a Java data structures course. It demonstrates these
-features:
+There are two examples, both from a CS 2 data structures course. [Quiz 1](quiz1/README.md) should be viewed first.
+
+Quiz 1 demonstrates these features, applied to a single submitted file.
 
 * Checkstyle tests
-* PMD tests
+* PMD tests (using a single rule from a single ruleset)
 * Parser-based tests (ensuring that language features are used as required)
 * JUnit tests
+
+[Homework 1](homework1/README.md) requires students to complete the implementation
+of two classes and write unit tests. It demonstrates these features:
+
+* Checkstyle tests
+* PMD tests (using all rules from multiple rulesets)
+* Code coverage measurement
+* JUnit tests
+* Cross-testing, where student-written tests are run against
+     * student code
+     * a hidden correct implementation
+     * a hidden buggy implementation
 
 ## FAQ
 

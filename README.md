@@ -61,6 +61,7 @@ of two classes and write unit tests. It demonstrates these features:
 * [What's PMD? How do I use it?](https://github.com/espertus/jacquard-examples/blob/main/README.md#whats-pmd-how-do-i-use-it)
 * [How is code coverage measured?](https://github.com/espertus/jacquard-examples/blob/main/README.md#how-is-code-coverage-measured)
 * [What is cross-testing?](https://github.com/espertus/jacquard-examples/blob/main/README.md#what-is-cross-testing)
+* [How do I set test result visibility?](https://github.com/espertus/jacquard-examples/blob/main/README.md#how-do-i-set-test-result-visibility)
 * [Why was the name "Jacquard" chosen?](https://github.com/espertus/jacquard-examples/blob/main/README.md#why-was-the-name-jacquard-chosen)
   
 ### How do I make sure I have the latest version of the Jacquard library?

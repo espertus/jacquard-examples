@@ -172,6 +172,67 @@ results.addAll(crossTester.run());
 
 See also the [Homework 1 cross-tester video](https://northeastern.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=165ca9fa-98eb-4f0f-8841-b069013430c5).
 
+### How do I set test result visibility?
+
+Gradescope specifies four levels of visibility in [Autograder Specifications](https://gradescope-autograders.readthedocs.io/en/latest/specs/):
+
+* `hidden`: test case will never be shown to students
+* `after_due_date`: test case will be shown after the assignment's due date has passed. If late submission is allowed, then test will be shown only after the late due date.
+* `after_published`: test case will be shown only when the assignment is explicitly published from the "Review Grades" page
+* `visible` (default): test case will always be shown
+
+These is a one-to-one correspondence between these visibility levels and the enumerated type [`Visibility`](https://ellenspertus.com/jacquard/com/spertus/jacquard/common/Visibility.html).
+
+Unless otherwised specified, all test results are immediately `visible` to students.
+
+#### `JUnitTester` results
+Unit tests run through [`JUnitTester`](https://ellenspertus.com/jacquard/com/spertus/jacquard/junittester/JUnitTester.html) (as
+opposed to the cross-tester) must be annotated with [`@GradedTest`](https://ellenspertus.com/jacquard/com/spertus/jacquard/junittester/GradedTest.html). The
+attribute `visibility` has the default value [`Visibility.VISIBLE`](https://ellenspertus.com/jacquard/com/spertus/jacquard/common/Visibility.html#VISIBLE) but
+can be set to any other visibility. Here is an example from [Quiz 1](https://github.com/espertus/jacquard-examples/blob/main/quiz1/src/main/java/student/ProvidedFavoritesIteratorTest.java):
+```java
+    @Test
+    @GradedTest(name = "works for empty list", visibility = Visibility.AFTER_PUBLISHED, points = 5.0)
+    public void iteratorOverEmptyList() {
+        FavoritesIterator<String> iterator = new FavoritesIterator<>(favoriteHotSauces0);
+
+        // No items should be returned.
+        assertFalse(iterator.hasNext());
+        assertThrows(NoSuchElementException.class, () -> iterator.next());
+    }
+```
+
+#### Other results
+The visibility level can be set for the rest of the autograder results through the 
+initial configuration.
+
+The visibility level of a generated [`Result`](https://ellenspertus.com/jacquard/com/spertus/jacquard/common/Result.html) can be mutated by calling the [`changeVisibility(Visibility visibility)` instance method](https://ellenspertus.com/jacquard/com/spertus/jacquard/common/Result.html#changeVisibility(com.spertus.jacquard.common.Visibility)) or [`Result.changeVisibility(List<Result> results, Visibility visibility)`](https://ellenspertus.com/jacquard/com/spertus/jacquard/common/Result.html#changeVisibility(java.util.List,com.spertus.jacquard.common.Visibility)), as shown:
+
+```java
+        // Use the default configuration, which includes full visibility.
+        Autograder.init();
+        final Target target = Target.fromClass(FavoritesIterator.class);
+        List<Result> results = new ArrayList();
+
+        // Checkstyle results should be fully visible.
+        CheckstyleGrader checkstyleGrader = new CheckstyleGrader(
+                "config/checkstyle-rules.xml",
+                1.0,
+                5.0);
+        results.addAll(checkstyleGrader.grade(target));
+
+        // PMD results should be visible only after the due date.
+        PmdGrader pmdGrader = PmdGrader.createFromRules(
+                1.0,
+                5.0,
+                "category/java/bestpractices.xml",
+                "MissingOverride");
+        List<Result> pmdResults = pmdGrader.grade(target);
+        // Change visibility before adding to results.
+        Result.changeVisibility(pmdResults, Visibility.AFTER_DUE_DATE);
+        results.addAll(pmdResults);
+```
+
 ### Why was the name "Jacquard" chosen?
 
 The CSV files used for cross-testing made me think of looms, such as the [looms created by

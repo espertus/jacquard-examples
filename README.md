@@ -57,6 +57,7 @@ of two classes and write unit tests. It demonstrates these features:
 
 ## FAQ
 * [How do I make sure I have the latest version of the Jacquard library?](https://github.com/espertus/jacquard-examples/blob/main/README.md#how-do-i-make-sure-i-have-the-latest-version-of-the-jacquard-library)
+* [What configuration options are there?](https://github.com/espertus/jacquard-examples/blob/main/README.md#what-configuration-options-are-there)
 * [How do I use Checkstyle?](https://github.com/espertus/jacquard-examples/blob/main/README.md#how-do-i-use-checkstyle)
 * [What's PMD? How do I use it?](https://github.com/espertus/jacquard-examples/blob/main/README.md#whats-pmd-how-do-i-use-it)
 * [How is code coverage measured?](https://github.com/espertus/jacquard-examples/blob/main/README.md#how-is-code-coverage-measured)
@@ -74,6 +75,41 @@ or follow these steps in IntelliJ:
 3. Select `Refresh Gradle Dependencies`.
 
 ![screenshot](images/refresh-jar.png)
+
+### What configuration options are there?
+There are currently 3 configurable values:
+* `timeout` (default: `10_000L`), how many milliseconds to run a test before termination;
+  a value of `0` means never to timeout
+* `javaLevel` (default: 17), the Java language level used for [syntax-based graders](https://ellenspertus.com/jacquard/com/spertus/jacquard/syntaxgrader/package-summary.html)
+* `visibility` (default: [`Visibility.visible`](https://ellenspertus.com/jacquard/com/spertus/jacquard/common/Visibility.html#VISIBLE)),
+the visibility of test results (except for `JUnitTester` results, which are specified differently)
+
+See also [How do I set test result visibility?](https://github.com/espertus/jacquard-examples/blob/main/README.md#how-do-i-set-test-result-visibility).
+
+To use the default values, call [`Autograder.init()`](https://ellenspertus.com/jacquard/com/spertus/jacquard/common/Autograder.html#init())
+at the start of your program. Here's how to explicitly set other values:
+
+```java
+Autograder.Builder builder = Autograder.Builder.getInstance();
+
+// By default, tests time out in 10,000 ms if they don't complete.
+builder.timeout(5000); // set timeout to 5 s
+
+// By default, Java level 17 is used.
+builder.javaLevel(11); // use Java level 11
+
+// By default, all tests results are visible.
+builder.visibility(Visibility.HIDDEN); // hide test results
+builder.build();
+```
+This can be written more concisely:
+```
+Autograder.Builder.getInstance()
+    .timeout(5000)
+    .javaLevel(11)
+    .visibility(Visibility.HIDDEN)
+    .build();
+```
 
 ### How do I use Checkstyle?
 
@@ -204,8 +240,8 @@ can be set to any other visibility. Here is an example from [Quiz 1](https://git
 ```
 
 #### Other results
-The visibility level can be set for the rest of the autograder results through the 
-initial configuration.
+The visibility level can be set for all other types of autograder results through the 
+[initial configuration](https://github.com/espertus/jacquard-examples/blob/main/README.md#what-configuration-options-are-there).
 
 The visibility level of a generated [`Result`](https://ellenspertus.com/jacquard/com/spertus/jacquard/common/Result.html) can be mutated by calling the [`changeVisibility(Visibility visibility)` instance method](https://ellenspertus.com/jacquard/com/spertus/jacquard/common/Result.html#changeVisibility(com.spertus.jacquard.common.Visibility)) or [`Result.changeVisibility(List<Result> results, Visibility visibility)`](https://ellenspertus.com/jacquard/com/spertus/jacquard/common/Result.html#changeVisibility(java.util.List,com.spertus.jacquard.common.Visibility)), as shown:
 

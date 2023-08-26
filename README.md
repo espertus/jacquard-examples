@@ -34,9 +34,9 @@ or select individual videos:
 
 ## Examples
 
-There are two examples, both from a CS 2 data structures course. [Quiz 1](quiz1/README.md) should be viewed first.
+There are two examples, both from a CS 2 data structures course. Quiz 1 should be viewed first.
 
-Quiz 1 demonstrates these features, applied to a single submitted file.
+[Quiz 1](quiz1/README.md) demonstrates these features, applied to a single submitted file.
 
 * Checkstyle tests
 * PMD tests (using a single rule from a single ruleset)
@@ -131,7 +131,45 @@ provided:
   which uses a linear function of the line coverage percentage (ignoring branch coverage)
 If you want to write your own scorer, we suggest viewing [`LinearScorer.java`](https://github.com/espertus/jacquard/blob/main/src/main/java/com/spertus/jacquard/coverage/LinearScorer.java).
 
-### Why was the name "Jacquard" used?
+### What is cross-testing?
+Cross-testing is my term for running multiple sets of tests against multiple implementations.
+Most autograders only run instructor tests against student code. Jacquard also supports running
+student tests against multiple versions of instructor code.
+
+Cross-testing using submitted code is specified by a CSV file, such as 
+[Homework 1's `student-tests.csv`](hw1/src/main/resources/student-tests.csv):
+
+|   | student  | correct   | buggy  |
+|---: | :--: | :--: | :--: |
+| size  | 10  | 5 | -5 |
+| concat  | 20  | 10  | -10  |
+
+The header and first row mean:
+* If the tests do not report any errors on the implementation of the `size()` method in the `student` package, 10 points are earned.
+* If the tests do not report any errors on the implementation of the `size()` method in the `correct` package, 5 points are earned.
+* If the tests do report an errors on the implementation of the `size()` method in the `buggy` package, 5 points are earned.
+
+The negative signs in the "buggy" column indicate that the tests are inverted (i.e., points are earned if they fail).
+
+Test names must start with the name of the method under test, such as "sizeWorksForEmptyList()".
+
+This excerpt from [Homework 1's `main()` method](https://github.com/espertus/jacquard-examples/blob/main/hw1/src/main/java/student/Main.java) shows how the cross-tester is created and run:
+```java
+// Create CrossTester to run student tests on:
+// * student code (20 points)
+// * hidden correct implementation (15 points)
+// * hidden buggy implementation (15 points)
+// Grading detail is in student-tests.csv.
+CrossTester crossTester = new CrossTester(
+    student.ILOSTest.class, // the test to run
+    "student-tests.csv" // the name of the CSV file
+);
+results.addAll(crossTester.run());
+```
+
+See also the [Homework 1 cross-tester video](https://northeastern.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=165ca9fa-98eb-4f0f-8841-b069013430c5).
+
+### Why was the name "Jacquard" chosen?
 
 The CSV files used for cross-testing made me think of looms, such as the [looms created by
 Joseph Marie Jacquard](https://en.wikipedia.org/wiki/Jacquard_machine), which were

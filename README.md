@@ -73,13 +73,31 @@ CheckstyleGrader checkstyleGrader=new CheckstyleGrader(
 ```
 
 We recommend putting your configuration file in your project's `config/`
-directory so it is copied to Gradescope and sharing it with students so
-they can run checkstyle in their
+directory so it is copied to Gradescope. We also recommend sharing it with
+students so they can run checkstyle in their
 IDE ([IntelliJ plugin](https://plugins.jetbrains.com/plugin/1065-checkstyle-idea),
 [Eclipse plugin](https://checkstyle.org/eclipse-cs/#!/))
 before uploading. The IntelliJ plugin supports using a local configuration
 file or accessing one via URL, so students don't need to download it
 (but will need to configure the plugin to point to it).
+
+### What's PMD? How do I use it?
+[PMD](https://pmd.github.io/) (which is not an acronym) is a source code analyzer
+capable of more complex checks than Checkstyle, such as whether the `@Override`
+annotation is always used where permitted.
+
+PMD rules are organized into rulesets, which, as the name suggests, are sets of rules. 
+You can [make your own rulesets](https://pmd.github.io/pmd/pmd_userdocs_making_rulesets.htm)
+or use [Java rulesets](https://github.com/pmd/pmd/tree/master/pmd-java/src/main/resources)
+built in to PMD, such as [`category/java/bestpractices.xml`](https://github.com/pmd/pmd/blob/master/pmd-java/src/main/resources/category/java/bestpractices.xml).
+
+Jacquard's [PMDGrader](https://ellenspertus.com/jacquard/com/spertus/jacquard/pmdgrader/PmdGrader.html)
+has two static factory methods:
+* [`createFromRuleSetPaths()`](https://ellenspertus.com/jacquard/com/spertus/jacquard/pmdgrader/PmdGrader.html#createFromRuleSetPaths(double,double,java.lang.String...)), 
+  which lets you specify one or more rulesets to be used in their entirety [used in [quiz1](hw1/Main.java)]
+* [`createFromRules()`]((https://ellenspertus.com/jacquard/com/spertus/jacquard/pmdgrader/PmdGrader.html#createFromRules(double,double,java.lang.String,java.lang.String...))), which lets you specify one ruleset and one or more rules from that ruleset [used in [hw1](hw1/Main.java)]
+
+There are PMD plugins for [IntelliJ](https://plugins.jetbrains.com/plugin/1137-pmd) and [Eclipse](https://marketplace.eclipse.org/category/free-tagging/pmd).
 
 ## Support
 

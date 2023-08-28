@@ -46,6 +46,7 @@ There are two examples, both from a CS 2 data structures course. Quiz 1 should b
 [Homework 1](hw1/README.md) requires students to complete the implementation
 of two classes and write unit tests. It demonstrates these features:
 
+* Configuration of timeouts, language level, and visibility
 * Checkstyle tests
 * PMD tests (using all rules from multiple rulesets)
 * Code coverage measurement

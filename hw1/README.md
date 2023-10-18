@@ -20,6 +20,20 @@ view first.
 We recommend walking through the [Quiz 1 example](../quiz1/README.md) and the top-level
 videos before trying out this example.
 
+### Execution
+
+Unlike Quiz 1, this must be run from the command line. It will not run within the IDE unless you remove the lines that use the `CrossTester`:
+```
+CrossTester crossTester = new CrossTester(
+    student.ILOSTest.class,
+    "student-tests.csv");
+results.addAll(crossTester.run());
+```
+The way to run it from the command line is with:
+```
+./test_autograder.sh
+```
+
 ### Videos
 
 1. [Opening Homework 1](https://northeastern.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=b6ecb9d2-9a9b-4485-b394-b06a01300872) [0:21]

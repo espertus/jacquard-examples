@@ -39,6 +39,7 @@ The way to run it from the command line is with:
 1. [Opening Homework 1](https://northeastern.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=b6ecb9d2-9a9b-4485-b394-b06a01300872) [0:21]
 2. [Taking a first look at Homework 1](https://northeastern.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=ba36573d-dd4a-493d-8b3d-b06a0181c9ff) [8:07]
 3. [Cross-testing in Homework 1](https://northeastern.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=165ca9fa-98eb-4f0f-8841-b069013430c5) [3:15]
+4. [Running Homework 1 autograder locally](https://northeastern.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=2f5efb35-fdc7-4bfa-a531-b09f015d8f06) [0:38]
 
 ### Files
 

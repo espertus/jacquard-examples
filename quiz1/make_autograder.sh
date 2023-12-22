@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DIRS_TO_COPY=("lib/" "config/" "gradle/" "src/")
+DIRS_TO_COPY=("lib/" "config/" "gradle/" "src/" "build/")
 GRADLE_FILES=("gradlew" "build.gradle" "gradlew.bat")
 CONFIG_FILE=("config.ini")
 COMMON_DIR="../common"
@@ -11,6 +11,9 @@ echo "Removing carriage returns from scripts..."
 for item in "${SCRIPT_PATHS[@]}"; do
     echo dos2unix "$item"
 done
+
+# We use "clean" here to have a fresh build
+./gradlew clean build --console=plain
 
 echo "Building Autograder..."
 zip -r autograder.zip ${DIRS_TO_COPY[@]} ${GRADLE_FILES[@]} $CONFIG_FILE

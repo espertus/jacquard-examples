@@ -1,8 +1,7 @@
 # Jacquard Examples
 
-[Jacquard](https://github.com/espertus/jacquard) [[Javadoc](https://ellenspertus.com/jacquard/)]
-is a Java autograder for
-Gradescope. 
+[Jacquard](https://github.com/jacquard-autograder/jacquard)
+is a Java autograder for Gradescope.
 
 This repo used to contain examples of autograders showing how to use Jacquard.
 We decided it would be better to put each example in its own repository.
